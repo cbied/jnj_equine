@@ -16,18 +16,18 @@ const deleteOneSchedule = (req,res) => {
         .catch(error => res.status(500).send(`adminController-delete_meeting: ${error}`))
 }
 
-// const updateClientInfo = (req,res) => {
-//     const db = req.app.get('db'),
-//     { name, hash } = req.body,
-//     { id } = req.params
+const updateMeetingInfo = (req,res) => {
+    const db = req.app.get('db'),
+    { date, time } = req.body,
+        { id } = req.params;
 
-//     db.editOne( id, name, address, city, state, zipcode, image_url, monthly_rent, monthly_mortgage )
-//         .then(response => res.status(200).json(response))
-//         .catch(error => res.status(500).send(`controller-updateOne: ${error}`))
-// }
+    db.edit_meeting( id, date, time)
+        .then(response => res.status(200).json(response))
+        .catch(error => res.status(500).send(`controller-updateOne: ${error}`))
+}
 
 module.exports = {
     getClientSchedules,
     deleteOneSchedule,
-    // updateClientInfo
+    updateMeetingInfo
 }

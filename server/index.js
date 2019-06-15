@@ -27,9 +27,9 @@ app.use(session({
 app.use(express.json())
 
 // authController 
-app.post('/api/register', authController.register)
-app.post('/api/login', authController.login)
-app.post('/api/logout', authController.logout)
+app.post('/auth/register', authController.register)
+app.post('/auth/login', authController.login)
+app.post('/auth/logout', authController.logout)
 
 // clientController
 app.post('/api/schedule', clientController.scheduleOne)
@@ -40,7 +40,7 @@ app.get('/api/schedule', clientController.getClientSchedule)
 // adminController
 app.get('/api/schedules', adminController.getClientSchedules)
 app.delete(`/api/schedule/:id`, adminController.deleteOneSchedule)
-// app.put(`api/schedule/:id`, controller.updateClientInfo)
+app.put(`/api/schedule/:id`, adminController.updateMeetingInfo)
 
 
 app.listen(SERVER_PORT, () => {

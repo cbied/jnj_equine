@@ -1,13 +1,94 @@
-import React, { Component } from 'react'
+import React from 'react';
+import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, Input, Button } from 'reactstrap';
+import { Link } from 'react-router-dom'
+import axios from 'axios'
 
-export class Header extends Component {
-    render() {
-        return (
-            <div>
-              
-            </div>
-        )
-    }
+export default class Header extends React.Component {
+constructor(props) {
+super(props);
+
+this.state = {
+    collapsed: true,
+    username: '',
+    password: '',
+    user: {}
+};
 }
 
-export default Header
+toggleNavbar = () => {
+this.setState({
+    collapsed: !this.state.collapsed
+});
+}
+
+handleChange = e => {
+    this.setState({ [e.target.name]: e.target.value })
+}
+
+updateUser = user => {
+    this.setState({user});
+}
+
+login = () => {
+    const { username, password } = this.state;
+    axios
+        .post('/auth/login', { username, password })
+        .then(user => {
+        this.updateUser(user.data)
+        this.setState({ username: '', password: '' });
+        })
+        .catch(() => alert('Incorrect username or password'));
+}
+
+logout = () => {
+    axios
+        .post('/auth/logout')
+        .then(() => {
+        this.updateUser({});
+        })
+        .catch(err => console.log(err));
+}
+
+
+
+render() {
+    const { username, password, user } = this.state
+return (
+    <Navbar color="faded" light>
+        <NavbarBrand href="/" className="mr-auto">JnJ Equine Massage</NavbarBrand>
+        <NavbarToggler onClick={this.toggleNavbar} className="mr-2" />
+        <Collapse isOpen={!this.state.collapsed} navbar>
+        <Nav navbar>
+        {user.username ? 
+        (
+            <div className="welcomeMessage">
+                <h4>{user.username}, welcome to the dragon's lair</h4>
+                <Button type="submit" onClick={this.logout}>
+                    Logout
+                </Button>
+            </div>
+        )
+            :
+        (
+            <div>
+                <h3>Username</h3>
+                <Input placeholder="username" name="username" value={username} 
+                onChange={e => this.handleChange(e)}
+                />
+                <h3>Password</h3>
+                <Input placeholder="password" name="password" value={password} type="password"
+                onChange={e => this.handleChange(e)}
+                />
+                <Link to="/wizard/step_one"><p>Not a member yet? register here</p></Link>
+                <Button
+                onClick={() => this.login()}
+                >Login</Button>
+            </div>
+        )}
+        
+        </Nav>
+        </Collapse>
+    </Navbar>
+);
+}
+}
