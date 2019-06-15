@@ -4,7 +4,7 @@ const express = require('express'),
     session = require('express-session')
     app = express(),
     clientController = require('./clientController')
-    // adminController = require('./adminController')
+    adminController = require('./adminController')
     authController = require('./authController'),
     { SERVER_PORT, CONNECTION_STRING, SESSION_SECRET } = process.env;
 
@@ -33,13 +33,13 @@ app.post('/api/logout', authController.logout)
 
 // clientController
 app.post('/api/schedule', clientController.scheduleOne)
-// app.get('/api/schedule', clientController.getClientSchedule)
+app.get('/api/schedule', clientController.getClientSchedule)
 // ** add after MVP
 // app.put(`api/clientInfo/:id`, clientController.updateClientInfo)
 
 // adminController
-// app.get('/api/schedules', controller.getClientSchedules)
-// app.delete(`/api/schedule/:id`, controller.deleteOne)
+app.get('/api/schedules', adminController.getClientSchedules)
+app.delete(`/api/schedule/:id`, adminController.deleteOneSchedule)
 // app.put(`api/schedule/:id`, controller.updateClientInfo)
 
 

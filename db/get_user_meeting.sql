@@ -1,2 +1,2 @@
 SELECT * FROM meeting
-WHERE user_id = $1;
+WHERE client_id = $1;
