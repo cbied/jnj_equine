@@ -11,9 +11,9 @@ async function register(req,res) {
         return res.status(409).send('Username taken, try again')
     }
 
-    const salt = bcrypt.genSaltSync(10)
+    const salt = bcrypt.genSaltSync(12)
     const hash = bcrypt.hashSync(password, salt)
-    const registeredUser = await db.register_user([ firstName, lastName, address, city, state, phoneNumber, email, username, hash, isAdmin ])
+    const registeredUser = await db.register_user([ username, hash, isAdmin, firstName, lastName, address, city, state, phoneNumber, email ])
     const user = registeredUser[0]
     if(user) {
         req.session.user = { isAdmin: user.is_admin, username: user.username, id: user.id }

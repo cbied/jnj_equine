@@ -1,4 +1,16 @@
 
+const registerHorse = (req,res) => {
+    const db = req.app.get('db'),
+        { name, age, breed, discipline, past_injuries, 
+        behavioral_issues, gender, pregnant, expected_pregnancy_date} = req.body,
+        { id } = req.session.user;
+
+    db.register_horse( [name, age, breed, discipline, past_injuries, 
+        behavioral_issues, gender, pregnant, expected_pregnancy_date, id] )
+        .then(response => res.status(200).send(response.data))
+        .catch(error => res.status(500).send(`Client_registerHorse: ${error}`))
+}
+
 const scheduleOne = (req,res) => {
     const db = req.app.get('db'),
         { date, time } = req.body;
@@ -15,6 +27,7 @@ const getClientSchedule = async (req,res) => {
 }
 
 module.exports = {
+    registerHorse,
     scheduleOne,
     getClientSchedule
 }

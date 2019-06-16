@@ -33,6 +33,7 @@ app.post('/auth/logout', authController.logout)
 
 // clientController
 app.post('/api/schedule', clientController.scheduleOne)
+app.post('/api/horse', clientController.registerHorse)
 app.get('/api/schedule', clientController.getClientSchedule)
 // ** add after MVP
 // app.put(`api/clientInfo/:id`, clientController.updateClientInfo)
