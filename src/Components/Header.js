@@ -53,6 +53,7 @@ logout = () => {
 
 render() {
     const { username, password, user } = this.state
+    console.log(user.isAdmin)
 return (
     <Navbar color="faded" light>
         <NavbarBrand href="/" className="mr-auto">JnJ Equine Massage</NavbarBrand>
@@ -62,7 +63,8 @@ return (
         {user.username ? 
         (
             <div className="welcomeMessage">
-                <h4>{user.username}, welcome to the dragon's lair</h4>
+                <h4>Welcome {user.username}</h4>
+                <h3>generic login</h3>
                 <Button type="submit" onClick={this.logout}>
                     Logout
                 </Button>

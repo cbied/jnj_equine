@@ -39,7 +39,7 @@ async function login(req,res) {
         return res.status(403).send('Incorrect password');
     }
 
-    req.session.user = { isAdmin: user.is_admin, id: user.id, username: user.username };
+    req.session.user = { isAdmin: user.isadmin, id: user.id, username: user.username };
     return res.send(req.session.user);
 }
 

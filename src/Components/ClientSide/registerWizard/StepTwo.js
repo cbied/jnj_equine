@@ -14,8 +14,8 @@ export class StepTwo extends Component {
             discipline: '', 
             past_injuries: '', 
             behavioral_issues: '', 
-            gender: '', 
-            pregnant: '', 
+            gender: ['Stallion', 'Mare', 'Colt', 'Filly', 'Gelding', 'Ridgeling', 'Foal'], 
+            pregnant: ['No', 'Yes'], 
             expected_pregnancy_date: ''
         }
     }
@@ -104,25 +104,36 @@ export class StepTwo extends Component {
                     </Input>
                 </FormGroup> 
             </Col>
-            <Col md={2}>
-                <FormGroup>
-                    <Label for="pregnant">Pregnant</Label>
-                    <Input type="select" name="pregnant" value={pregnant}
-                    onChange={e => this.handleChange(e)}
-                    >
-                    <option>No</option>
-                    <option>Yes</option>     
-                    </Input>
-                </FormGroup>
-            </Col>
-            <Col md={2}>
-                <FormGroup>
-                    <Label for="expected_pregnancy_date">Expected pregnancy date</Label>
-                    <Input type="date" name="expected_pregnancy_date" value={expected_pregnancy_date}
-                    onChange={e => this.handleChange(e)}
-                    />
-                </FormGroup>
+            
+            { gender === 'Mare' || gender === 'Filly' ? 
+                <Col md={2}>
+                    <FormGroup>
+                        <Label for="pregnant">In foal?</Label>
+                        <Input type="select" name="pregnant" value={pregnant}
+                        onChange={e => this.handleChange(e)}
+                        >
+                        <option>No</option>
+                        <option>Yes</option>     
+                        </Input>
+                    </FormGroup>
                 </Col>
+
+            :
+            false
+            }
+            { pregnant === 'Yes' ? 
+                <Col md={2}>
+                    <FormGroup>
+                        <Label for="expected_pregnancy_date">Expected pregnancy date</Label>
+                        <Input type="date" name="expected_pregnancy_date" value={expected_pregnancy_date}
+                        onChange={e => this.handleChange(e)}
+                        />
+                    </FormGroup>
+                </Col>
+            :
+            false
+            }
+            
             </Row>
             <Link to="/clientDashboard">
             <Button

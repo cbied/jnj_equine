@@ -14,7 +14,6 @@ export default (
         <Route  path='/adminDashboard' component={AdminDashboard} />
         <Route  path='/adminEditMeeting' component={AdminEditMeeting} />
         <Route  path='/clientDashboard' component={ClientDashboard} />
-        <Route  path='/clientDashboard' component={ClientDashboard} />
         <Route  path='/clientScheduleMeeting' component={ClientScheduleMeeting} />
         <Route  path='/wizard/step_one' component={StepOne} />
         <Route  path='/wizard/step_two' component={StepTwo} />
