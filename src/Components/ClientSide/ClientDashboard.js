@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import PaymentForm from './PaymentForm';
 import StripeCheckout from 'react-stripe-checkout';
 import { Table, Button } from 'reactstrap';
 import { toast } from 'react-toastify'
+import "react-toastify/dist/ReactToastify.css";
 import axios from 'axios';
 
 toast.configure();
@@ -60,8 +60,8 @@ export class ClientDashboard extends Component {
                     </tbody>
                 </Table>
                 <div className="clientButtons">
-                    <Button color='outline-secondary'>Schedule</Button>
-                    <StripeCheckout 
+                    <Button color='outline-secondary' className='mb-3'>Schedule</Button>
+                    <StripeCheckout className='mb-3'
                     stripeKey="pk_test_IkGproX6Ez7mOrXs9140j7mj00L31UfDex"
                     token={this.handleToken}
                     billingAddress
@@ -74,7 +74,7 @@ export class ClientDashboard extends Component {
                 </div>
                 
                 <div>
-                    <h3>Balance: $200</h3>
+                    <h3>Balance: $150</h3>
                 </div>
             </div>
         )
