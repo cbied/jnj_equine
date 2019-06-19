@@ -36,13 +36,14 @@ app.post('/auth/register', authController.register)
 app.post('/auth/login', authController.login)
 app.post('/auth/logout', authController.logout)
 
+// clientController and AdminController 
+app.get('/api/clientInfo', clientController.getClientInfo)
+
 // clientController
 app.post('/api/schedule', clientController.scheduleMeeting)
 app.post('/api/horse', clientController.registerHorse)
 app.get('/api/schedule', clientController.getClientSchedule)
 app.get('/api/clientHorse', clientController.getClientHorse)
-app.get('/api/clientInfo', clientController.getClientInfo)
-// ** add after MVP
 // app.put(`api/clientInfo/:id`, clientController.updateClientInfo)
 
 // adminController

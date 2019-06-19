@@ -15,24 +15,15 @@ export class ClientScheduleMeeting extends Component {
             time2: '',
             description: '',
             payment: '',
-            user: {}
         }
     }
 
     componentDidMount() {
         this.getClientHorse()
-        this.getClientInfo()
     }
 
     handleChange = e => {
         this.setState({ [e.target.name]: e.target.value })
-    }
-
-    getClientInfo = () => {
-        axios
-            .get('/api/clientInfo')
-            .then(info => this.setState({ user: info }))
-            .catch(() => alert('No Info'));
     }
 
     getClientHorse = () =>  {
@@ -62,9 +53,13 @@ export class ClientScheduleMeeting extends Component {
             .catch(() => alert('Something went wrong'));
     }
 
+ 
+
 
     render() {
-        console.log(this.state.user)
+        let { user } = this.props
+        console.log(user)
+        console.log(this.props)
         let { horses } = this.state
         let listHorses = horses.map((horse,index) => {
                 return <option value={horse.name} key={index}>{horse.name}</option>
@@ -125,11 +120,12 @@ export class ClientScheduleMeeting extends Component {
                             { listHorses }
                         </Input>
                     </FormGroup>
-                    <Link to='/clientDashboard/${}'>
+                    <Link to={`/clientDashboard/${this.props.user.id}`}>
                     <Button
                     onClick={() => this.postMeeting()}
                     >Request meeting</Button>
                     </Link>
+                    
                 </Form>
             </div>
         )
@@ -138,7 +134,7 @@ export class ClientScheduleMeeting extends Component {
 
 function mapStateToProps(state) {
     const { user } = state
-    return user
+    return { user }
 }
 
 export default connect(mapStateToProps)(ClientScheduleMeeting)

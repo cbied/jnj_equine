@@ -4,6 +4,7 @@ import { Table, Button } from 'reactstrap';
 import { toast } from 'react-toastify'
 import "react-toastify/dist/ReactToastify.css";
 import { Link } from 'react-router-dom'
+import { connect } from 'react-redux'
 import axios from 'axios';
 
 toast.configure();
@@ -12,6 +13,7 @@ export class ClientDashboard extends Component {
     constructor(props) {
         super(props)
         this.state = {
+            collapsed: true,
             name: "",
             meetings: []
         }
@@ -25,6 +27,12 @@ export class ClientDashboard extends Component {
         this.setState(prevState => ({
             modal: !prevState.modal
         }));
+    }
+
+    toggleNavbar = () => {
+        this.setState({
+            collapsed: !this.state.collapsed
+        });
     }
 
     handleToken = async token => {
@@ -61,6 +69,7 @@ export class ClientDashboard extends Component {
         })
         return (
             <div>
+               
                 <h1>Welcome {this.props.username}</h1>
                 
                 
@@ -95,9 +104,20 @@ export class ClientDashboard extends Component {
                     {displayMeetings}
                     </tbody>
                 </Table>
+
+                <Button type="submit" color='outline-danger'
+                onClick={() => this.props.logout()}>
+                    Logout
+                </Button>
             </div>
+           
         )
     }
 }
 
-export default ClientDashboard
+function mapStateToProps(state) {
+    const { user, username } = state
+    return { user, username }
+}
+
+export default connect(mapStateToProps)(ClientDashboard)

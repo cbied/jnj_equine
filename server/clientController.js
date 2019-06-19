@@ -32,10 +32,10 @@ const getClientHorse = async (req,res) => {
 
 const getClientInfo = async (req,res) => {
     const db = req.app.get('db')
-    const userInfo = await db.get_user([ req.session.user.id ])
-    console.log(userInfo)
+    const userInfo = await db.get_client_meeting_info()
     return res.status(200).send(userInfo)
 }
+
 
 module.exports = {
     registerHorse,

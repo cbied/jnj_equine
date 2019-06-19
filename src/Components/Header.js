@@ -4,7 +4,7 @@ import AdminDashboard from './AdminSide/AdminDashboard'
 import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, Input, Button } from 'reactstrap';
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { handleUsername, handlePassword, handleIsAdmin, handleUserId, handleUpdateUser } from '../redux/loginReducer'
+import { handleUsername, handlePassword, handleUpdateUser } from '../redux/loginReducer'
 import axios from 'axios'
 
 class Header extends React.Component {
@@ -13,7 +13,6 @@ super(props);
 
 this.state = {
     collapsed: true,
-    user: {}
     };
 }
 
@@ -27,9 +26,7 @@ this.state = {
         this.setState({ [e.target.name]: e.target.value })
     }
 
-    updateUser = user => {
-        this.setState({user});
-    }
+
 
 // login = () => {
 //     const { username, password } = this.state;
@@ -46,71 +43,35 @@ logIn = () => {
     let { username, password }= this.props
     axios
         .post('/auth/login', { username, password })
-        .then(user => this.updateUser(user.data))
+        .then(user => {
+            console.log(user)
+            this.props.handleUpdateUser(user.data) 
+        })
+        .catch(() => alert('Incorrect username or password'));
 }
+
 
 logout = () => {
     axios
         .post('/auth/logout')
         .then(() => {
-        this.updateUser({});
+            this.props.handleUpdateUser({}) 
         })
         .catch(err => console.log(err));
 }
 
 render() {
-    const { username, password, userId, isAdmin } = this.props
-    const { user } = this.state
+    const { username, password, user } = this.props
+    console.log(user)
 return (
-    <Navbar color="faded" light>
-        <NavbarBrand href="/" className="mr-auto">JnJ Equine Massage</NavbarBrand>
-        <NavbarToggler onClick={this.toggleNavbar} className="mr-2" />
-        <Collapse isOpen={!this.state.collapsed} navbar>
-        <Nav navbar>
-        {user.id && !user.isAdmin ? 
-        (
-        <div>
-            <div>
-                <ClientDashboard 
-                userId={user.id}
-                username={user.username}
-                isAdmin={user.isAdmin}
-            />
-            </div>
-            <div>
-                <Button type="submit" color='outline-danger'
-                onClick={this.logout}>
-                    Logout
-                </Button>
-            </div>
-            
-        </div>
-        )
-
-            :
-
-        user.id && user.isAdmin ?
-        <div>
-            <div className="welcomeMessage">
-                <h4>Welcome {user.username}</h4>
-                <h3>admin login</h3>
-                <Button type="submit" onClick={this.logout}>
-                    Logout
-                </Button>
-            </div>
-            <div>
-                <AdminDashboard 
-                userId={user.id}
-                username={user.username}
-                isAdmin={user.isAdmin}
-            />
-            </div>
-        </div>
-
-            :
-
-        (
-            <div>
+                !user.id ? 
+                (
+                <Navbar color="faded" light>
+                <NavbarBrand href="/" className="mr-auto">JnJ Equine Massage</NavbarBrand>
+                <NavbarToggler onClick={this.toggleNavbar} className="mr-2" />
+                <Collapse isOpen={!this.state.collapsed} navbar>
+                <Nav navbar>
+                    
                 <h3>Username</h3>
                 <Input placeholder="username" name="username" value={username} 
                 onChange={e => this.props.handleUsername(e.target.value)}
@@ -122,23 +83,78 @@ return (
                 <Link to="/wizard/step_one"><p>Not a member yet? register here</p></Link>
                 <Button
                 onClick={() => {
-                    this.logIn(username, password)
-                    this.props.handleUpdateUser(user)
+                    this.logIn(username, password) 
+                    
                 }}
                 >Login</Button>
+            
+                </Nav>
+                </Collapse>
+                </Navbar>
+                )
+            : user.id && !user.isAdmin ?
+            (
+            <div>
+            <Navbar color="faded" light>
+            <NavbarBrand href="/" className="mr-auto">JnJ Equine Massage</NavbarBrand>
+            <NavbarToggler onClick={this.toggleNavbar} className="mr-2" />
+            <Collapse isOpen={!this.state.collapsed} navbar>
+            <Nav navbar>
+            
+            {/* <Button type="submit" color='outline-danger'
+                onClick={() => this.logout()}>
+                    Logout
+            </Button> */}
+            </Nav>
+            </Collapse>
+            </Navbar>
+            <ClientDashboard 
+            logout={this.logout}
+            />
             </div>
-        )}
+            )
+            
+            : user.id && user.isAdmin ?
+            (
+            <div>
+            <Navbar color="faded" light>
+            <NavbarBrand href="/" className="mr-auto">JnJ Equine Massage</NavbarBrand>
+            <NavbarToggler onClick={this.toggleNavbar} className="mr-2" />
+            <Collapse isOpen={!this.state.collapsed} navbar>
+            <Nav navbar>
+            
+            {/* <Button type="submit" color='outline-danger'
+                onClick={() => this.logout()}>
+                    Logout
+            </Button> */}
+            </Nav>
+            </Collapse>
+            </Navbar>
+            <AdminDashboard 
+            logout={this.logout}
+            />
+            </div>
+            )
+            
+    
+        :
+
+        false
+            
+            
+
         
-        </Nav>
-        </Collapse>
-    </Navbar>
-);
-}
+        
+        
+        
+        
+            );
+    }
 }
 
 function mapStateToProps(state) {
-    const { loggedIn, username, password, userId, user} = state
-    return {loggedIn, username, password, userId, user }
+    const { loggedIn, username, password, user} = state
+    return {loggedIn, username, password, user }
 }
 
-export default connect(mapStateToProps, { handleUsername, handlePassword, handleIsAdmin, handleUserId, handleUpdateUser })(Header)
+export default connect(mapStateToProps, { handleUsername, handlePassword, handleUpdateUser })(Header)
