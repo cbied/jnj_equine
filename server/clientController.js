@@ -11,13 +11,11 @@ const registerHorse = (req,res) => {
         .catch(error => res.status(500).send(`Client_registerHorse: ${error}`))
 }
 
-const scheduleOne = (req,res) => {
+const scheduleMeeting = async (req,res) => {
     const db = req.app.get('db'),
-        { date, time } = req.body;
-
-    db.create_meeting( [date, time, req.session.user.id] )
-        .then(response => res.status(200).send(response.data))
-        .catch(error => res.status(500).send(`Client_createOne: ${error}`))
+        { date, time1, time2, description, payment, horse} = req.body;
+    const scheduleMeeting = await db.create_meeting( [req.session.user.id, date, time1, time2, description, payment, horse] )
+    return res.status(200).send(scheduleMeeting)
 }
 
 const getClientSchedule = async (req,res) => {
@@ -26,8 +24,23 @@ const getClientSchedule = async (req,res) => {
     return res.status(200).send(userMeeting);
 }
 
+const getClientHorse = async (req,res) => {
+    const db = req.app.get('db')
+    const userHorse = await db.get_user_horse([ req.session.user.id ])
+    return res.status(200).send(userHorse)
+}
+
+const getClientInfo = async (req,res) => {
+    const db = req.app.get('db')
+    const userInfo = await db.get_user([ req.session.user.id ])
+    console.log(userInfo)
+    return res.status(200).send(userInfo)
+}
+
 module.exports = {
     registerHorse,
-    scheduleOne,
-    getClientSchedule
+    scheduleMeeting,
+    getClientSchedule,
+    getClientHorse,
+    getClientInfo
 }

@@ -3,43 +3,50 @@ import ClientDashboard from './ClientSide/ClientDashboard'
 import AdminDashboard from './AdminSide/AdminDashboard'
 import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, Input, Button } from 'reactstrap';
 import { Link } from 'react-router-dom'
+import { connect } from 'react-redux'
+import { handleUsername, handlePassword, handleIsAdmin, handleUserId, handleUpdateUser } from '../redux/loginReducer'
 import axios from 'axios'
 
-export default class Header extends React.Component {
+class Header extends React.Component {
 constructor(props) {
 super(props);
 
 this.state = {
     collapsed: true,
-    username: '',
-    password: '',
     user: {}
-};
+    };
 }
 
-toggleNavbar = () => {
-this.setState({
-    collapsed: !this.state.collapsed
-});
-}
+    toggleNavbar = () => {
+        this.setState({
+            collapsed: !this.state.collapsed
+        });
+    }
 
-handleChange = e => {
-    this.setState({ [e.target.name]: e.target.value })
-}
+    handleChange = e => {
+        this.setState({ [e.target.name]: e.target.value })
+    }
 
-updateUser = user => {
-    this.setState({user});
-}
+    updateUser = user => {
+        this.setState({user});
+    }
 
-login = () => {
-    const { username, password } = this.state;
+// login = () => {
+//     const { username, password } = this.state;
+//     axios
+//         .post('/auth/login', { username, password })
+//         .then(user => {
+//         this.updateUser(user.data)
+//         this.setState({ username: '', password: '' });
+//         })
+//         .catch(() => alert('Incorrect username or password'));
+// }
+
+logIn = () => {
+    let { username, password }= this.props
     axios
         .post('/auth/login', { username, password })
-        .then(user => {
-        this.updateUser(user.data)
-        this.setState({ username: '', password: '' });
-        })
-        .catch(() => alert('Incorrect username or password'));
+        .then(user => this.updateUser(user.data))
 }
 
 logout = () => {
@@ -51,10 +58,9 @@ logout = () => {
         .catch(err => console.log(err));
 }
 
-
-
 render() {
-    const { username, password, user } = this.state
+    const { username, password, userId, isAdmin } = this.props
+    const { user } = this.state
 return (
     <Navbar color="faded" light>
         <NavbarBrand href="/" className="mr-auto">JnJ Equine Massage</NavbarBrand>
@@ -107,15 +113,18 @@ return (
             <div>
                 <h3>Username</h3>
                 <Input placeholder="username" name="username" value={username} 
-                onChange={e => this.handleChange(e)}
+                onChange={e => this.props.handleUsername(e.target.value)}
                 />
                 <h3>Password</h3>
                 <Input placeholder="password" name="password" value={password} type="password"
-                onChange={e => this.handleChange(e)}
+                onChange={e => this.props.handlePassword(e.target.value)}
                 />
                 <Link to="/wizard/step_one"><p>Not a member yet? register here</p></Link>
                 <Button
-                onClick={() => this.login()}
+                onClick={() => {
+                    this.logIn(username, password)
+                    this.props.handleUpdateUser(user)
+                }}
                 >Login</Button>
             </div>
         )}
@@ -126,3 +135,10 @@ return (
 );
 }
 }
+
+function mapStateToProps(state) {
+    const { loggedIn, username, password, userId, user} = state
+    return {loggedIn, username, password, userId, user }
+}
+
+export default connect(mapStateToProps, { handleUsername, handlePassword, handleIsAdmin, handleUserId, handleUpdateUser })(Header)

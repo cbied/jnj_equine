@@ -39,8 +39,15 @@ async function login(req,res) {
         return res.status(403).send('Incorrect password');
     }
 
-    req.session.user = { isAdmin: user.isadmin, id: user.id, username: user.username };
-    return res.send(req.session.user);
+        // const activeSession = window.sessionStorage.getItem(sessionKey);
+        // if (activeSession) {
+        //         req.session.user = { isAdmin: user.isadmin, id: user.id, username: user.username };
+        //         return res.send(req.session.user);
+        // }
+        req.session.user = { isAdmin: user.isadmin, id: user.id, username: user.username };
+        // console.log(window.sessionStorage)
+        // window.sessionStorage.setItem(sessionKey, stringifiedUserToken);
+        return res.send(req.session.user);
 }
 
 const logout = (req,res) => {
