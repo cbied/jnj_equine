@@ -10,8 +10,7 @@ export class AdminDashboard extends Component {
             meetings: [],
             clientInfo: [],
             modal: false,
-            activeMeeting: 0,
-            activeClient: 0
+            activeMeeting: 0
         }
     }
 
@@ -52,14 +51,17 @@ export class AdminDashboard extends Component {
     
     render() {
         let { meetings, activeMeeting, clientInfo, activeClient } = this.state
+        console.log('clientInfo')
         console.log(clientInfo)
+        console.log('meetings')
         console.log(meetings)
-        console.log(clientInfo[activeClient] )
+        // console.log()
         // console.log(clientInfo[meetings[activeClient].client_id])
         let displayMeetings = meetings.map((meeting, index) => {
             return (
                 <tr key={meeting.id}
-                onClick={() => this.toggle(index)}
+                onClick={() => {
+                    this.toggle(index)}}
                 >
                     <td>{meeting.horse}</td>
                     <td>{meeting.date}</td>

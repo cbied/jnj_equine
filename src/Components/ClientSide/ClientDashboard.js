@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
+import ClientSchedulerMeeting from './ClientScheduleMeeting'
 import StripeCheckout from 'react-stripe-checkout';
-import { Table, Button } from 'reactstrap';
+import { Table, Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { toast } from 'react-toastify'
 import "react-toastify/dist/ReactToastify.css";
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
+import { handleUpdateUser } from '../../redux/loginReducer'
 import axios from 'axios';
 
 toast.configure();
@@ -15,18 +17,13 @@ export class ClientDashboard extends Component {
         this.state = {
             collapsed: true,
             name: "",
-            meetings: []
+            meetings: [],
+            modalSchedule: false,
         }
     }
 
     componentDidMount() {
         this.getClientMeeting()
-    }
-
-    toggle = () => {
-        this.setState(prevState => ({
-            modal: !prevState.modal
-        }));
     }
 
     toggleNavbar = () => {
@@ -54,6 +51,15 @@ export class ClientDashboard extends Component {
             .catch(err => console.log(err))
     }
 
+    logout = () => {
+        axios
+            .post('/auth/logout')
+            .then(() => {
+                this.props.handleUpdateUser({}) 
+            })
+            .catch(err => console.log(err));
+    }
+
     render() {
         let { name, meetings } = this.state
         console.log(this.props)
@@ -71,12 +77,7 @@ export class ClientDashboard extends Component {
             <div>
                
                 <h1>Welcome {this.props.username}</h1>
-                
-                
-                <div className="clientButtons">
-                    <Link to="/clientScheduler">
-                    <Button color='outline-secondary' className='mb-3'>Schedule</Button>
-                    </Link>
+
                     <StripeCheckout className='mb-3'
                     stripeKey="pk_test_IkGproX6Ez7mOrXs9140j7mj00L31UfDex"
                     token={this.handleToken}
@@ -85,7 +86,6 @@ export class ClientDashboard extends Component {
                     amount={150 * 100}
                     name={name}
                     />
-                </div>
                 
                 <div>
                     <h3>Balance: $150</h3>
@@ -105,10 +105,10 @@ export class ClientDashboard extends Component {
                     </tbody>
                 </Table>
 
-                <Button type="submit" color='outline-danger'
-                onClick={() => this.props.logout()}>
+                {/* <Button type="submit" color='outline-danger'
+                onClick={() => this.logout()}>
                     Logout
-                </Button>
+                </Button> */}
             </div>
            
         )
@@ -120,4 +120,4 @@ function mapStateToProps(state) {
     return { user, username }
 }
 
-export default connect(mapStateToProps)(ClientDashboard)
+export default connect(mapStateToProps, { handleUpdateUser })(ClientDashboard)

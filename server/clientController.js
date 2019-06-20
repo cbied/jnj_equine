@@ -36,11 +36,35 @@ const getClientInfo = async (req,res) => {
     return res.status(200).send(userInfo)
 }
 
+const getOneClientInfo = async (req,res) => {
+    const db = req.app.get('db')
+    const userInfo = await db.get_user_info_by_id([req.session.user.id])
+    return res.status(200).send(userInfo)
+}
+
+const updateClientInfo = async (req,res) => {
+        const db = req.app.get('db'),
+        { firstname, lastname, address, city, state,
+            phonenumber, email } = req.body,
+            { id } = req.session.user;
+            
+    const updateClientInfo = await db.update_client_info( id, firstname, lastname, address, city, state,
+        phonenumber, email )
+    return res.status(200).send(updateClientInfo)
+}
+
+const updateClientHorseInfo = async (req,res) => {
+
+}
+
 
 module.exports = {
     registerHorse,
     scheduleMeeting,
     getClientSchedule,
     getClientHorse,
-    getClientInfo
+    getClientInfo,
+    getOneClientInfo,
+    updateClientInfo,
+    updateClientHorseInfo
 }

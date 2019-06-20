@@ -44,7 +44,9 @@ app.post('/api/schedule', clientController.scheduleMeeting)
 app.post('/api/horse', clientController.registerHorse)
 app.get('/api/schedule', clientController.getClientSchedule)
 app.get('/api/clientHorse', clientController.getClientHorse)
-// app.put(`api/clientInfo/:id`, clientController.updateClientInfo)
+app.get('/api/oneClientInfo', clientController.getOneClientInfo)
+app.put(`/api/clientInfo`, clientController.updateClientInfo)
+app.put('/api/clientHorseInfo', clientController.updateClientHorseInfo)
 
 // adminController
 app.get('/api/schedules', adminController.getClientSchedules)

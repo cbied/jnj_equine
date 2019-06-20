@@ -120,11 +120,20 @@ export class ClientScheduleMeeting extends Component {
                             { listHorses }
                         </Input>
                     </FormGroup>
-                    <Link to={`/clientDashboard/${this.props.user.id}`}>
                     <Button
-                    onClick={() => this.postMeeting()}
-                    >Request meeting</Button>
-                    </Link>
+                onClick={() => {
+                    this.props.modalScheduleFn()
+                    this.props.toggleScheduleFn()}}
+                    >cancel</Button>
+                    <Button
+                    onClick={() => {
+                        this.postMeeting()
+                        this.props.modalScheduleFn()
+                        this.props.toggleScheduleFn()
+                    }}
+                    >Request meeting
+                    </Button>
+                
                     
                 </Form>
             </div>
