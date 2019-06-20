@@ -30,7 +30,7 @@ const getClientHorse = async (req,res) => {
     return res.status(200).send(userHorse)
 }
 
-const getClientInfo = async (req,res) => {
+const getClientMeetingInfo = async (req,res) => {
     const db = req.app.get('db')
     const userInfo = await db.get_client_meeting_info()
     return res.status(200).send(userInfo)
@@ -40,6 +40,12 @@ const getOneClientInfo = async (req,res) => {
     const db = req.app.get('db')
     const userInfo = await db.get_user_info_by_id([req.session.user.id])
     return res.status(200).send(userInfo)
+}
+
+const getClientHorseInfo = async (req,res) => {
+    const db = req.app.get('db')
+    const userHorseInfo = await db.get_all_client_horse_info([req.session.user.id])
+    return res.status(200).send(userHorseInfo)
 }
 
 const updateClientInfo = async (req,res) => {
@@ -54,7 +60,14 @@ const updateClientInfo = async (req,res) => {
 }
 
 const updateClientHorseInfo = async (req,res) => {
+    const db = req.app.get('db'),
+    { name, age, breed, discipline, past_injuries, 
+        behavioral_issues, gender, pregnant, expected_pregnancy_date} = req.body,
+        { id } = req.session.user;
 
+    const updateClientHorseInfo = await db.update_client_horse_info( id, name, age, breed, discipline, past_injuries, 
+        behavioral_issues, gender, pregnant, expected_pregnancy_date )
+    return res.status(200).send(updateClientHorseInfo)
 }
 
 
@@ -63,8 +76,9 @@ module.exports = {
     scheduleMeeting,
     getClientSchedule,
     getClientHorse,
-    getClientInfo,
+    getClientMeetingInfo,
     getOneClientInfo,
+    getClientHorseInfo,
     updateClientInfo,
     updateClientHorseInfo
 }

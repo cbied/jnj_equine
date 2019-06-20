@@ -48,7 +48,6 @@ export class ClientProfile extends Component {
         .catch(err => console.log(`ClientProfile-getClientInfo ${err}`))
     }
 
-    // work on put 
     updateUser = () => {
         const { firstname, lastname, address, city, state,
                 phonenumber, email } = this.state.clientInfo
@@ -62,9 +61,10 @@ export class ClientProfile extends Component {
                 alert(err.response.request.response);
             });
     }
+
+
     render() {
-        const { clientInfo } = this.state  
-        console.log(this.props.modalProfileFn)          
+        const { clientInfo } = this.state         
         return (
             <Form className="App">
             <Row form>

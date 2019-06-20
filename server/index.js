@@ -32,26 +32,43 @@ app.use(express.json())
 app.use(cors());
 
 // authController 
+// registers user
 app.post('/auth/register', authController.register)
+// login user
 app.post('/auth/login', authController.login)
+// logout user
 app.post('/auth/logout', authController.logout)
 
+
 // clientController and AdminController 
-app.get('/api/clientInfo', clientController.getClientInfo)
+app.get('/api/clientInfo', clientController.getClientMeetingInfo)
+
 
 // clientController
 app.post('/api/schedule', clientController.scheduleMeeting)
+// client horse registration
 app.post('/api/horse', clientController.registerHorse)
+// gets clients schedule
 app.get('/api/schedule', clientController.getClientSchedule)
+// gets clients horse name
 app.get('/api/clientHorse', clientController.getClientHorse)
+// gets client's information
 app.get('/api/oneClientInfo', clientController.getOneClientInfo)
+// gets all clients horse information
+app.get('/api/clientHorseInfo', clientController.getClientHorseInfo)
+// edits clients info
 app.put(`/api/clientInfo`, clientController.updateClientInfo)
+// edits clients horse info
 app.put('/api/clientHorseInfo', clientController.updateClientHorseInfo)
 
+
 // adminController
+// gets all clients schedule meetings
 app.get('/api/schedules', adminController.getClientSchedules)
+
+// still need to work on
 app.delete(`/api/schedule/:id`, adminController.deleteOneSchedule)
-app.put(`/api/schedule/:id`, adminController.updateMeetingInfo)
+
 
 // stripe checkout
 app.post("/checkout", stripeController.chargeCard);

@@ -2,6 +2,7 @@ import React from 'react';
 import ClientDashboard from './ClientSide/ClientDashboard'
 import AdminDashboard from './AdminSide/AdminDashboard'
 import ClientProfile from './ClientSide/ClientProfile'
+import ListClientHorsesForUpdate from './ClientSide/ListClientHorsesForUpdate'
 import ClientSchedulerMeeting from './ClientSide/ClientScheduleMeeting'
 import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, Input, Button, Modal, ModalHeader, ModalBody, ModalFooter  } from 'reactstrap';
 import { Link } from 'react-router-dom'
@@ -15,7 +16,10 @@ super(props);
 
 this.state = {
     collapsed: true,
-    modalProfile: false
+    modalProfile: false,
+    modalHorseProfile: false,
+    modal: false,
+    
     };
 }
 
@@ -34,6 +38,18 @@ this.state = {
     modalProfile = () => {
         this.setState(prevState => ({
             modalProfile: !prevState.modal
+        }));
+    }
+
+    toggleHorseProfile = () => {
+        this.setState(prevState => ({
+            modal: !prevState.modal
+        }));
+    }
+
+    modalHorseProfile = () => {
+        this.setState(prevState => ({
+            modalHorseProfile: !prevState.modal
         }));
     }
 
@@ -123,12 +139,18 @@ return (
             user.id && !user.isAdmin ?
             (
             <div>
+            <ClientDashboard 
+            logout={this.logout}
+            />
+
             <Navbar color="faded" light>
-            <NavbarBrand href="/" className="mr-auto">JnJ Equine Massage</NavbarBrand>
             <NavbarToggler onClick={this.toggleNavbar} className="mr-2" />
+            <NavbarBrand href="/" className="mr-auto">JnJ Equine Massage</NavbarBrand>
             <Collapse isOpen={!this.state.collapsed} navbar>
             <Nav navbar>
-            <Button color='outline-secondary' className='mb-3' onClick={this.modalProfile}>Profile</Button>
+            
+            {/*  edit client info */}
+            <Button color='outline-secondary' className='mb-3' onClick={this.modalProfile}>Client Profile</Button>
                 
                 <Modal isOpen={this.state.modalProfile} toggle={this.toggleProfile} className={this.props.className}>
                     <ModalHeader toggle={this.toggleProfile}>Update Profile</ModalHeader>
@@ -140,6 +162,26 @@ return (
                     </ModalBody>
                 </Modal>
 
+                {/* edit client horse */}
+                <Button color='outline-secondary' className='mb-3' onClick={this.modalHorseProfile}>Horse Profile</Button>
+                
+                <Modal isOpen={this.state.modalHorseProfile} toggle={this.toggleHorseProfile} className={this.props.className}>
+                    <ModalHeader toggle={this.toggleHorseProfile}>Update Horse Profile</ModalHeader>
+                    <ModalBody>
+
+                    <ListClientHorsesForUpdate 
+                            modalHorseProfileFn={this.modalHorseProfile}
+                            toggleHorseProfileFn={this.toggleHorseProfile}
+                    />
+                    
+
+                        
+                    </ModalBody>
+                </Modal>
+
+            
+
+                {/* schedule meeting */}
                 <Button color='outline-secondary' className='mb-3' onClick={this.modalSchedule}>Schedule</Button>
                 
                 <Modal isOpen={this.state.modalSchedule} toggle={this.toggleSchedule} className={this.props.className}>
@@ -152,6 +194,7 @@ return (
                     </ModalBody>
                 </Modal>
 
+                {/* logout */}
                 <Button type="submit" color='outline-danger'
                 onClick={() => this.logout()}>
                     Logout
@@ -159,9 +202,7 @@ return (
             </Nav>
             </Collapse>
             </Navbar>
-            <ClientDashboard 
-            logout={this.logout}
-            />
+           
             
             </div>
             )

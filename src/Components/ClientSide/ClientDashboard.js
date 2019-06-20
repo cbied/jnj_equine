@@ -104,13 +104,7 @@ export class ClientDashboard extends Component {
                     {displayMeetings}
                     </tbody>
                 </Table>
-
-                {/* <Button type="submit" color='outline-danger'
-                onClick={() => this.logout()}>
-                    Logout
-                </Button> */}
             </div>
-           
         )
     }
 }
