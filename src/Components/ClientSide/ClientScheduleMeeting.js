@@ -15,6 +15,7 @@ export class ClientScheduleMeeting extends Component {
             time2: '',
             description: '',
             payment: '',
+            horse_id: null
         }
     }
 
@@ -37,9 +38,10 @@ export class ClientScheduleMeeting extends Component {
     }
 
     postMeeting = () => {
-        let {horse, date, time1, time2, description, payment} = this.state
+        let {horse, date, time1, time2, description, payment, horses} = this.state
+        console.log(horses.indexOf(horse))
         axios
-            .post('/api/schedule', { date, time1, time2, description, payment, horse })
+            .post('/api/schedule', { date, time1, time2, description, payment, horse, horses })
             .then(() => {
                 this.setState({
                     horse: '',
@@ -61,8 +63,9 @@ export class ClientScheduleMeeting extends Component {
         console.log(user)
         console.log(this.props)
         let { horses } = this.state
-        let listHorses = horses.map((horse,index) => {
-                return <option value={horse.name} key={index}>{horse.name}</option>
+        console.log(horses)
+        let listHorses = horses.map(horse => {
+                return <option value={horse.name} key={horse.horse_id}>{horse.name}</option>
         })
         return (
             <div>

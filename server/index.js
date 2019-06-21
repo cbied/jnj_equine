@@ -60,14 +60,16 @@ app.get('/api/clientHorseInfo', clientController.getClientHorseInfo)
 app.put(`/api/clientInfo`, clientController.updateClientInfo)
 // edits clients horse info
 app.put('/api/clientHorseInfo', clientController.updateClientHorseInfo)
-
+// client can delete horse
+app.delete(`/api/clientHorseInfo/:id`, clientController.deleteOneHorse)
 
 // adminController
 // gets all clients schedule meetings
 app.get('/api/schedules', adminController.getClientSchedules)
+// update the meetings time, date and pending true/false
+app.put('/api/schedule', adminController.updateMeetingInfo)
 
-// still need to work on
-app.delete(`/api/schedule/:id`, adminController.deleteOneSchedule)
+
 
 
 // stripe checkout

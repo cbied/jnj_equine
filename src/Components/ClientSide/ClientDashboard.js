@@ -60,19 +60,37 @@ export class ClientDashboard extends Component {
             .catch(err => console.log(err));
     }
 
+
+
     render() {
         let { name, meetings } = this.state
-        console.log(this.props)
-        let displayMeetings = meetings.map(meeting => {
-            return(   
-                <tr key={meeting.id}>
+        console.log(meetings)
+        let displayMeetings = meetings.map(meeting => {   
+            console.log(meeting.pending)
+            if(meeting.pending === null) {
+                return (
+                <tr key={meeting.id} className='pending'>
                     <td>{meeting.horse}</td>
                     <td>{meeting.date}</td>
                     <td>{meeting.time_range_one} to {meeting.time_range_two}</td>
                     <td>{meeting.select_payment}</td>
+                    <td>Pending</td>
                 </tr>
+                )
+            } else if (meeting.pending === true) {
+                return (
+                <tr key={meeting.id} className='approved'>
+                    <td>{meeting.horse}</td>
+                    <td>{meeting.meeting_date}</td>
+                    <td>{meeting.meeting_time}</td>
+                    <td>{meeting.select_payment}</td>
+                    <td>Approved</td>
+                </tr> 
+                )
+            }
+            
+        }
             )
-        })
         return (
             <div>
                

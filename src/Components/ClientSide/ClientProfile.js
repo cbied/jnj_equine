@@ -35,13 +35,7 @@ export class ClientProfile extends Component {
         this.setState({clientInfo: {...clientInfo, [e.target.name]: e.target.value}})
     }
 
-    updateUser = user => {
-        this.setState({
-            user,
-        });
-    }
-
-     getClientInfo = () => {
+    getClientInfo = () => {
     axios
         .get('/api/oneClientInfo')
         .then(response => this.setState({ clientInfo: response.data[0]}))
@@ -55,11 +49,17 @@ export class ClientProfile extends Component {
             .put('/api/clientInfo', { firstname, lastname, address, city, state,
                 phonenumber, email })
             .then(user => {  
-                this.updateUser(user.data);
+                this.userUpdate(user.data);
             })
             .catch(err => {
                 alert(err.response.request.response);
             });
+    }
+
+    userUpdate = user => {
+        this.setState({
+            user,
+        });
     }
 
 

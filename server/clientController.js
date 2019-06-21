@@ -13,9 +13,12 @@ const registerHorse = (req,res) => {
 
 const scheduleMeeting = async (req,res) => {
     const db = req.app.get('db'),
-        { date, time1, time2, description, payment, horse} = req.body;
-    const scheduleMeeting = await db.create_meeting( [req.session.user.id, date, time1, time2, description, payment, horse] )
-    return res.status(200).send(scheduleMeeting)
+        { date, time1, time2, description, payment, horse, horses} = req.body;
+    
+        const scheduleMeeting = await db.create_meeting( [req.session.user.id, date, time1, time2, description, payment, horse] )
+        return res.status(200).send(scheduleMeeting)
+    
+    
 }
 
 const getClientSchedule = async (req,res) => {
@@ -62,12 +65,20 @@ const updateClientInfo = async (req,res) => {
 const updateClientHorseInfo = async (req,res) => {
     const db = req.app.get('db'),
     { name, age, breed, discipline, past_injuries, 
-        behavioral_issues, gender, pregnant, expected_pregnancy_date} = req.body,
+        behavioral_issues, gender, pregnant, expected_pregnancy_date, horse_id} = req.body,
         { id } = req.session.user;
 
     const updateClientHorseInfo = await db.update_client_horse_info( id, name, age, breed, discipline, past_injuries, 
-        behavioral_issues, gender, pregnant, expected_pregnancy_date )
+        behavioral_issues, gender, pregnant, expected_pregnancy_date, horse_id )
     return res.status(200).send(updateClientHorseInfo)
+}
+
+const deleteOneHorse = (req,res) => {
+    const db = req.app.get('db'),
+        { id } = req.params;
+        
+    db.delete_one_horse( id )
+    return res.sendStatus(200)
 }
 
 
@@ -80,5 +91,6 @@ module.exports = {
     getOneClientInfo,
     getClientHorseInfo,
     updateClientInfo,
-    updateClientHorseInfo
+    updateClientHorseInfo,
+    deleteOneHorse
 }

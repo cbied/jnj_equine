@@ -1,8 +1,12 @@
+
 .App {
   text-align: center;
 }
 
-.clientButtons {
-  display: flex;
-  flex-direction: column;
+.pending {
+  background-color: #dff70a
+}
+
+.approved {
+  background-color: #54da17
 }

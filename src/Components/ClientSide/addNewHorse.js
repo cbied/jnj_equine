@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import axios from 'axios'
 
 
-export class StepTwo extends Component {
+export class AddNewHorse extends Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -17,7 +17,6 @@ export class StepTwo extends Component {
             gender: '', 
             pregnant: '', 
             expected_pregnancy_date: '',
-            horses: []
         }
     }
 
@@ -53,7 +52,6 @@ export class StepTwo extends Component {
     render() {
         const { name, age, breed, discipline, past_injuries, behavioral_issues,
             gender, pregnant, expected_pregnancy_date, horses } = this.state
-        console.log(horses)
             return (
         <Form className="App">
             <Row form>
@@ -175,4 +173,4 @@ export class StepTwo extends Component {
     }
 }
 
-export default StepTwo
+export default AddNewHorse

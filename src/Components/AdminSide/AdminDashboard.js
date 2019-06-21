@@ -10,7 +10,12 @@ export class AdminDashboard extends Component {
             meetings: [],
             clientInfo: [],
             modal: false,
-            activeMeeting: 0
+            activeMeeting: 0,
+            meeting_time: '',
+            meeting_date: '',
+            price: null,
+            pending: null,
+            meetingDetails: {}
         }
     }
 
@@ -37,6 +42,26 @@ export class AdminDashboard extends Component {
             .catch(err => console.log(`admin-getClientInfo ${err}`))
     }
 
+    updateMeeting = (index, bool) => {
+        let { meeting_time, meeting_date, price, pending, meetings } = this.state
+        let { id } = meetings[index]
+        pending = bool
+        axios
+            .put('/api/schedule', { id, meeting_time, meeting_date, price, pending })
+            .then(user => {  
+                this.meetingUpdate(user.data);
+            })
+            .catch(err => {
+                alert(err.response.request.response);
+            });
+    }
+
+    meetingUpdate = (meetingDetails) => {
+        this.setState({
+            meetingDetails, 
+        })
+    }
+
     toggle = (index) => {
         this.setState(prevState => ({
             modal: !prevState.modal,
@@ -44,7 +69,6 @@ export class AdminDashboard extends Component {
         if(typeof index === 'number') {
             this.setState({ 
                 activeMeeting: index,
-                // activeClient: i
             })
         }
         }
@@ -101,19 +125,19 @@ export class AdminDashboard extends Component {
                             <tbody>
                                 <tr>
                                 <td>{meetings[activeMeeting].date}</td>
-                                <td><Input type="date" name="date"
+                                <td><Input type="date" name="meeting_date"
                                 onChange={e => this.handleChange(e)}
                                 /></td>
                                 </tr>
                                 <tr>
                                 <td>{meetings[activeMeeting].time_range_one} to {meetings[activeMeeting].time_range_two}</td>
-                                <td><Input type="time" name="time"
+                                <td><Input type="time" name="meeting_time"
                                 onChange={e => this.handleChange(e)}
                                 /></td>
                                 </tr>
                                 <tr>
                                 <td>Price:</td>
-                                <td><Input type="number" name="amount" value='150' 
+                                <td><Input type="number" name="price"  
                                 onChange={e => this.handleChange(e)}
                                 /></td>
                                 </tr>
@@ -149,7 +173,10 @@ export class AdminDashboard extends Component {
                     
                     </ModalBody>
                     <ModalFooter>
-                        <Button color="primary" onClick={this.toggle}>Do Something</Button>{' '}
+                        <Button color="primary" onClick={() => {
+                            this.toggle()
+                            this.updateMeeting(this.state.activeMeeting, true)
+                            }}>Accept</Button>{' '}
                         <Button color="secondary" onClick={this.toggle}>Cancel</Button>
                     </ModalFooter>
                 </Modal>

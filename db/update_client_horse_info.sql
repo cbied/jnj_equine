@@ -8,4 +8,4 @@ behavioral_issues = $7,
 gender = $8,
 pregnant = $9,
 expected_pregnancy_date = $10
-WHERE id = $1;
+WHERE client_id = $1 AND horse_id = $11;

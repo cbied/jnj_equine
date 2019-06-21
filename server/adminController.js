@@ -3,7 +3,7 @@
 
 const getClientSchedules = async (req,res) => {
     const db = req.app.get('db')
-    const allMeetings = await db.get_all_meetings();
+    const allMeetings = await db.get_all_pending_meetings();
     return res.status(200).send(allMeetings)
 }
 
@@ -18,13 +18,14 @@ const deleteOneSchedule = (req,res) => {
 
 const updateMeetingInfo = (req,res) => {
     const db = req.app.get('db'),
-    { date, time } = req.body,
-        { id } = req.params;
-
-    db.edit_meeting( id, date, time)
+    { id, meeting_time, meeting_date, price, pending } = req.body;
+        // { id } = req.params;
+    console.log(req.body)
+    db.edit_meeting( id, meeting_time, meeting_date, price, pending )
         .then(response => res.status(200).json(response))
         .catch(error => res.status(500).send(`controller-updateOne: ${error}`))
 }
+
 
 module.exports = {
     getClientSchedules,
