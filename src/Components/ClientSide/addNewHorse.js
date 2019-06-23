@@ -20,6 +20,9 @@ export class AddNewHorse extends Component {
         }
     }
 
+    componentDidUpdate() {
+        // this.registerHorse()
+    }
 
     handleChange = e => {
         this.setState({ [e.target.name]: e.target.value })
@@ -165,7 +168,7 @@ export class AddNewHorse extends Component {
             <Button
                 onClick={() => {
                     this.registerHorse()
-                    // put new closing modal in here
+                    alert("Your horse has been added")
                 }}
             >Add Horse</Button>
         </Form>

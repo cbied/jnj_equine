@@ -81,11 +81,11 @@ this.state = {
 //         })
 //         .catch(() => alert('Incorrect username or password'));
 // }
-
+ 
 logIn = () => {
     let { username, password }= this.props
     axios
-        .post     ('/auth/login', { username, password })
+        .post('/auth/login', { username, password })
         .then(user => {
             console.log(user)
             this.props.handleUpdateUser(user.data) 
@@ -105,11 +105,11 @@ logout = () => {
 
 render() {
     const { username, password, user } = this.props
-    console.log(user)
+    console.log(this.state.modalHorseProfile)
 return (
                 !user.id ? 
                 (
-                <Navbar color="faded" light>
+                <Navbar color="faded" className="nav" light>
                 <NavbarBrand href="/" className="mr-auto">JnJ Equine Massage</NavbarBrand>
                 <NavbarToggler onClick={this.toggleNavbar} className="mr-2" />
                 <Collapse isOpen={!this.state.collapsed} navbar>
@@ -138,14 +138,14 @@ return (
             : 
             user.id && !user.isAdmin ?
             (
-            <div>
+            <div className="center">
             <ClientDashboard 
             logout={this.logout}
             />
 
-            <Navbar color="faded" light>
-            <NavbarToggler onClick={this.toggleNavbar} className="mr-2" />
-            <NavbarBrand href="/" className="mr-auto">JnJ Equine Massage</NavbarBrand>
+            <Navbar color="faded" className="center" light>
+            <NavbarBrand href="/" >JnJ Equine Massage</NavbarBrand>
+            <NavbarToggler onClick={this.toggleNavbar} className="mb-2"/>
             <Collapse isOpen={!this.state.collapsed} navbar>
             <Nav navbar>
             
@@ -166,21 +166,18 @@ return (
                 <Button color='outline-secondary' className='mb-3' onClick={this.modalHorseProfile}>Horse Profile</Button>
                 
                 <Modal isOpen={this.state.modalHorseProfile} toggle={this.toggleHorseProfile} className={this.props.className}>
-                    <ModalHeader toggle={this.toggleHorseProfile}>Update Horse Profile</ModalHeader>
+                    <ModalHeader>Update Horse Profile</ModalHeader>
+                        
                     <ModalBody>
 
                     <ListClientHorsesForUpdate 
                             modalHorseProfileFn={this.modalHorseProfile}
                             toggleHorseProfileFn={this.toggleHorseProfile}
                     />
-                    
-
-                        
                     </ModalBody>
                 </Modal>
 
             
-
                 {/* schedule meeting */}
                 <Button color='outline-secondary' className='mb-3' onClick={this.modalSchedule}>Schedule</Button>
                 

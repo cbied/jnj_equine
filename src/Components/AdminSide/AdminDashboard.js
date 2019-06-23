@@ -95,6 +95,34 @@ export class AdminDashboard extends Component {
             )
         })
 
+        let displayClientInfo = clientInfo.map((client,index) => {
+
+        })
+
+        let displayHorseInfo = clientInfo.map((horse,index) => {
+
+        })
+
+        // does not work
+        let displayMeetingDetails = meetings.map((meeting,index) => {
+            return (
+                <div key={meeting.id}>
+                    <tr>
+                        <th>Description of problem</th>
+                    </tr>
+                    <tr >
+                        <td>{meeting.description_of_problem}</td>
+                    </tr>
+                    
+                    <tr>
+                        <th>Payment type</th>
+                        <td>{meeting.select_payment}</td>
+                    </tr>
+                </div>
+                
+            )
+        })
+
         return (
             <div>
                 <h2>Welcome {this.props.username}</h2>
@@ -144,13 +172,19 @@ export class AdminDashboard extends Component {
                             </tbody>
                             </Table>
                             <div>
-                                <Button color="primary" id="togglerDesc" style={{ marginBottom: '1rem' }}>
+
+                                <Button color="primary" id="togglerHorseInfo" style={{ marginBottom: '1rem', marginRight:'1rem' }}>
                                 Horse Info
                                 </Button>
-                                <Button color="success" id="togglerClientInfo" style={{ marginBottom: '1rem' }}>
+                                <Button color="success" id="togglerClientInfo" style={{ marginBottom: '1rem', marginRight:'1rem' }}>
                                 Client Info
                                 </Button>
-                                <UncontrolledCollapse toggler="#togglerDesc">
+                                <Button color="primary" id="togglerMeetingInfo" style={{ marginBottom: '1rem' }}>
+                                Meeting Info
+                                </Button>
+
+
+                                <UncontrolledCollapse toggler="#togglerHorseInfo">
                                 <Card>
                                     <CardBody>
                                     {/* {clientInfo[meetings[activeClient]]} */}
@@ -165,6 +199,14 @@ export class AdminDashboard extends Component {
                                     </CardBody>
                                 </Card>
                                 </UncontrolledCollapse>
+
+                                <UncontrolledCollapse toggler="#togglerMeetingInfo">
+                                <Card>
+                                    <CardBody>
+                                    {displayMeetingDetails}
+                                    </CardBody>
+                                </Card>
+                                </UncontrolledCollapse>
                             </div>
                             </div>
                         )
@@ -173,17 +215,32 @@ export class AdminDashboard extends Component {
                     
                     </ModalBody>
                     <ModalFooter>
+                        <Button
+                        onClick={() => {
+                            this.toggle()
+                            this.updateMeeting(this.state.activeMeeting, false)
+                        }}
+                        >Deny</Button>
+
+
                         <Button color="primary" onClick={() => {
                             this.toggle()
                             this.updateMeeting(this.state.activeMeeting, true)
-                            }}>Accept</Button>{' '}
-                        <Button color="secondary" onClick={this.toggle}>Cancel</Button>
+                            }}>Accept</Button>
+                            
+                            {' '}
+
+                        <Button color="secondary" 
+                        onClick={this.toggle}
+                        >Cancel</Button>
                     </ModalFooter>
                 </Modal>
-                <Button type="submit" color='outline-danger'
+
+                
+                {/* <Button type="submit" color='outline-danger'
                 onClick={() => this.props.logout()}>
                     Logout
-                </Button>
+                </Button> */}
             </div>
         )
     }

@@ -126,6 +126,8 @@ export class ClientScheduleMeeting extends Component {
                     <Button
                 onClick={() => {
                     this.props.modalScheduleFn()
+                    this.props.toggleScheduleFn()
+                    this.props.modalScheduleFn()
                     this.props.toggleScheduleFn()}}
                     >cancel</Button>
                     <Button
@@ -133,6 +135,9 @@ export class ClientScheduleMeeting extends Component {
                         this.postMeeting()
                         this.props.modalScheduleFn()
                         this.props.toggleScheduleFn()
+                        this.props.modalScheduleFn()
+                        this.props.toggleScheduleFn()
+                        alert("Your meeting is pending, Check back for confirmation")
                     }}
                     >Request meeting
                     </Button>

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import ClientHorseProfile from './addNewHorse'
+import AddNewHorse from './AddNewHorse'
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, CardBody, Collapse, Card,
 Row, Col, FormGroup, Label, Input, Form } from 'reactstrap'
 import axios from 'axios'
@@ -30,6 +30,15 @@ export class ListClientHorsesForUpdate extends Component {
         this.getHorseInfo()
         this.deleteHorse()
     }
+
+    // componentDidUpdate(prevProps, prevState) {
+    //     console.log(prevProps)
+    //     console.log(prevState)
+    //     if(prevState.horses.length !== this.state.horses.length) {
+    //         this.deleteHorse()
+    //         this.getHorseInfo()
+    //     }
+    // }
 
     handleChange = (e,index) => {
         let tempHorses  = this.state.horses
@@ -88,13 +97,10 @@ export class ListClientHorsesForUpdate extends Component {
         // map over values (use ClientProfile as reference)
         let displayHorses = horses.map((horse,index) => {
             return (
-                    <CardBody key={horse.horse_id}>
+                    <CardBody key={horse.horse_id} >
                         <Form className="App">
-                            <Button
-                            onClick={() => this.deleteHorse(horse.horse_id)}
-                            >delete</Button>
                             <Row form>
-                                <Col md={6}>
+                                <Col md={4}>
                                 <FormGroup>
                                     <Label for="name">Name</Label>
                                     <Input type="text" name="name"  value={horse.name}  
@@ -102,7 +108,7 @@ export class ListClientHorsesForUpdate extends Component {
                                     />
                                 </FormGroup>
                                 </Col>
-                                <Col md={6}>
+                                <Col md={3}>
                                 <FormGroup>
                                     <Label for="age">Age</Label>
                                     <Input type="text" name="age" value={horse.age}
@@ -110,9 +116,7 @@ export class ListClientHorsesForUpdate extends Component {
                                     />
                                 </FormGroup>
                                 </Col>
-                            </Row>
-                            <Row form>
-                            <Col md={6}>
+                                <Col md={5}>
                                 <FormGroup>
                                     <Label for="breed">Breed</Label>
                                     <Input type="text" name="breed" value={horse.breed}
@@ -120,29 +124,30 @@ export class ListClientHorsesForUpdate extends Component {
                                     />
                                 </FormGroup>
                             </Col>
-                            <Col md={3}>
+                            </Row>
+                            <Row form>
+                            <Col md={6}>
                                 <FormGroup>
                                     <Label for="discipline">Discipline</Label>
-                                    <Input type="text" name="discipline" value={horse.discipline}
+                                    <Input type="textarea" name="discipline" value={horse.discipline}
                                     onChange={e => this.handleChange(e,index)}
                                     />
                                 </FormGroup>
                             </Col>
-                            <Col md={1}>
-                                <FormGroup>
-                                    <Label for="past_injuries">Past injuries</Label>
-                                    <Input type="text" name="past_injuries" value={horse.past_injuries}
-                                    onChange={e => this.handleChange(e,index)}
-                                    />
-                                </FormGroup>
-                            </Col>
-                            </Row>
-                            
-                            <Row form>
-                                <Col md={4}>
+                            <Col md={6}>
                                 <FormGroup>
                                     <Label for="behavioral_issues">Behavioral issues</Label>
-                                    <Input type="text" name="behavioral_issues" value={horse.behavioral_issues}
+                                    <Input type="textarea" name="behavioral_issues" value={horse.behavioral_issues}
+                                    onChange={e => this.handleChange(e,index)}
+                                    />
+                                </FormGroup>
+                                </Col>
+                            </Row>
+                            <Row form>
+                                <Col md={6}>
+                                <FormGroup>
+                                    <Label for="past_injuries">Past injuries</Label>
+                                    <Input type="textarea" name="past_injuries" value={horse.past_injuries}
                                     onChange={e => this.handleChange(e,index)}
                                     />
                                 </FormGroup>
@@ -164,8 +169,10 @@ export class ListClientHorsesForUpdate extends Component {
                                     </Input>
                                 </FormGroup>
                                 </Col>
+                            </Row>
+                            <Row>
                                 { horse.gender === 'Mare' || horse.gender === 'Filly' ? 
-                                <Col md={2}>
+                                <Col md={4}>
                                 <FormGroup>
                                     <Label for="pregnant">In foal?</Label>
                                     <Input type="select" name="pregnant" value={horse.pregnant}
@@ -182,7 +189,7 @@ export class ListClientHorsesForUpdate extends Component {
                             false
                             }
                             { horse.pregnant === 'Yes' ? 
-                                <Col md={2}>
+                                <Col md={7}>
                                     <FormGroup>
                                         <Label for="expected_pregnancy_date">Expected foaling date</Label>
                                         <Input type="date" name="expected_pregnancy_date" value={horse.expected_pregnancy_date}
@@ -194,48 +201,62 @@ export class ListClientHorsesForUpdate extends Component {
                             false
                             }
                             </Row>
+                            <div className="horseEditBtns">
+                            <Button
+                            onClick={() => {
+                                this.deleteHorse(horse.horse_id)
+                                this.props.modalHorseProfileFn()
+                                this.props.toggleHorseProfileFn()
+                                this.props.modalHorseProfileFn()
+                                this.props.toggleHorseProfileFn()
+                                alert(`${horse.name} was deleted`)}}
+                            >delete</Button>
                             <Button
                                 onClick={() => {
                                     this.updateHorse(index)
-                                    // this.props.modalProfileFn()
-                                    // this.props.toggleProfileFn()
-                                    alert('Your information was updated!')
+                                    alert(`${horse.name}'s information was updated!`)
                                 }}
                             >Save</Button>
+                            </div>
                         </Form>
                     </CardBody>
             )
         })
         return (
-            <div>
+            <div className="HorseProfile">
 
                 <Button color="success" onClick={this.toggleNested}>Add Horse</Button>
-                    <Modal isOpen={this.state.nestedModal} toggle={this.toggleNested} onClosed={this.state.closeAll ? this.toggle : undefined}>
+                    <Modal isOpen={this.state.nestedModal} toggle={this.toggleNested} onClosed={this.state.closeAll ? this.toggle : undefined} className="margins">
                     <ModalHeader>Add Horse</ModalHeader>
                     <ModalBody>
                         {/* add alert that horse was added in ClientHorse Profile*/}
-                        <ClientHorseProfile />
+                        <AddNewHorse />
                     </ModalBody>
                     <ModalFooter>
-                        <Button color="primary" onClick={this.toggleNested}>Done</Button>{' '}
+
+                        <Button color="primary" 
+                        onClick={this.toggleNested}>Done</Button>{' '}
  
                     </ModalFooter>
                     </Modal>
 
-                    <Button color="primary" onClick={this.toggle} style={{ marginBottom: '1rem' }}>Edit Horse Info</Button>
-                    <Collapse isOpen={this.state.collapse}>
+                    <Button color="primary" className="margins"
+                    onClick={this.toggle}>Edit Horse Info</Button>
+                    <Collapse isOpen={this.state.collapse} className="margins">
                     <Card>
                     {displayHorses}
                     </Card>
                     </Collapse>
                 
 
-                <Button
-                onClick={() => {
-                    this.props.modalHorseProfileFn()
-                    this.props.toggleHorseProfileFn()
-                }}
-            >Cancel</Button>
+                    <Button
+                    onClick={() => {
+                        this.props.modalHorseProfileFn()
+                        this.props.toggleHorseProfileFn()
+                        this.props.modalHorseProfileFn()
+                        this.props.toggleHorseProfileFn()
+                    }}
+                    >Done</Button>
             </div>
         )
     }

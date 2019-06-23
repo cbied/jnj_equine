@@ -1,12 +1,32 @@
-
 .App {
-  text-align: center;
-}
+  text-align: center; }
+
+.center {
+  margin: 0 auto !important; }
+
+.clientProfileBtns {
+  display: flex;
+  flex-basis: 200px;
+  justify-content: space-around;
+  align-items: center;
+  padding: 1rem; }
 
 .pending {
-  background-color: #dff70a
-}
+  background-color: #ffe400; }
 
 .approved {
-  background-color: #54da17
-}
+  background-color: #14a76c; }
+
+.denied {
+  display: none; }
+
+.HorseProfile {
+  display: flex;
+  flex-direction: column; }
+  .HorseProfile .margins {
+    margin-top: 2rem;
+    margin-bottom: 2rem; }
+  .HorseProfile .horseEditBtns {
+    display: flex;
+    flex-basis: 200px;
+    justify-content: space-around; }

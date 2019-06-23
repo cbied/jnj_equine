@@ -1,0 +1,63 @@
+// variables 
+$light-blue: #8CAFD5;
+$dark-blue: #1A4A84;
+$dark-beach: #635456;
+$light-beach: rgb(182, 168, 109);
+$pending: #ffe400;
+$approved: #14a76c;
+
+
+// body
+.App {
+  text-align: center;
+}
+
+// Dashboard body
+.center {
+  margin: 0 auto !important; 
+}
+
+.clientProfileBtns {
+  display: flex;
+  flex-basis: 200px;
+  justify-content: space-around;
+  align-items: center;
+  padding: 1rem;
+}
+
+
+// ClientDashboard table
+.pending {
+  background-color: $pending;
+}
+
+.approved {
+  background-color: $approved;
+}
+
+.denied {
+  display: none
+}
+
+// ListClientHorsesForUpdate Component
+.HorseProfile {
+  display: flex;
+  flex-direction: column;
+
+  .margins {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+  }
+
+  .horseEditBtns {
+    display: flex;
+    flex-basis: 200px;
+    justify-content: space-around;
+  }
+}
+
+
+
+@media only screen and (max-width: 500px) {
+
+}

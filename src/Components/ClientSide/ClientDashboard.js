@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
-import ClientSchedulerMeeting from './ClientScheduleMeeting'
 import StripeCheckout from 'react-stripe-checkout';
-import { Table, Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import { Table } from 'reactstrap';
 import { toast } from 'react-toastify'
 import "react-toastify/dist/ReactToastify.css";
-import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { handleUpdateUser } from '../../redux/loginReducer'
 import axios from 'axios';
@@ -73,7 +71,7 @@ export class ClientDashboard extends Component {
                     <td>{meeting.horse}</td>
                     <td>{meeting.date}</td>
                     <td>{meeting.time_range_one} to {meeting.time_range_two}</td>
-                    <td>{meeting.select_payment}</td>
+                    {/* <td>{meeting.select_payment}</td> */}
                     <td>Pending</td>
                 </tr>
                 )
@@ -83,20 +81,40 @@ export class ClientDashboard extends Component {
                     <td>{meeting.horse}</td>
                     <td>{meeting.meeting_date}</td>
                     <td>{meeting.meeting_time}</td>
-                    <td>{meeting.select_payment}</td>
+                    {/* <td>{meeting.select_payment}</td> */}
                     <td>Approved</td>
                 </tr> 
+                ) 
+            } else {
+                return (
+                <tr key={meeting.id} className='denied'>
+                </tr> 
                 )
+                
             }
             
         }
             )
         return (
-            <div>
+            <div className="App">
                
                 <h1>Welcome {this.props.username}</h1>
 
-                    <StripeCheckout className='mb-3'
+                <Table hover>
+                    <thead>
+                        <tr>
+                            <th scope="row">Horse</th>
+                            <th>Date</th>
+                            <th>Time</th>
+                            {/* <th>Payment Type</th> */}
+                        </tr>
+                        </thead>
+                    <tbody>
+                    {displayMeetings}
+                    </tbody>
+                </Table>
+
+                <StripeCheckout className='mb-3'
                     stripeKey="pk_test_IkGproX6Ez7mOrXs9140j7mj00L31UfDex"
                     token={this.handleToken}
                     billingAddress
@@ -108,20 +126,6 @@ export class ClientDashboard extends Component {
                 <div>
                     <h3>Balance: $150</h3>
                 </div>
-
-                <Table hover>
-                    <thead>
-                        <tr>
-                            <th scope="row">Horse</th>
-                            <th>Date</th>
-                            <th>Time</th>
-                            <th>Payment Type</th>
-                        </tr>
-                        </thead>
-                    <tbody>
-                    {displayMeetings}
-                    </tbody>
-                </Table>
             </div>
         )
     }

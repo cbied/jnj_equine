@@ -19,11 +19,7 @@ export class ClientProfile extends Component {
                 phonenumber: null, 
                 email: null
                 }
-
-            
         }
-
-        
     }
 
     componentDidMount() {
@@ -102,7 +98,7 @@ export class ClientProfile extends Component {
                     />
                 </FormGroup>
             </Col>
-            <Col md={1}>
+            <Col md={2}>
                 <FormGroup>
                     <Label for="state">State</Label>
                     <Input type="text" name="state" value={clientInfo.state}
@@ -130,20 +126,27 @@ export class ClientProfile extends Component {
                 </FormGroup>
                 </Col>
             </Row>
+            <div className="clientProfileBtns">
             <Button
                 onClick={() => {
                     this.props.modalProfileFn()
                     this.props.toggleProfileFn()
+                    this.props.modalProfileFn()
+                    this.props.toggleProfileFn()
                 }}
             >cancel</Button>
+            
             <Button
                 onClick={() => {
                     this.updateUser()
                     this.props.modalProfileFn()
                     this.props.toggleProfileFn()
+                    this.props.modalProfileFn()
+                    this.props.toggleProfileFn()
                     alert('Your information was updated!')
                 }}
             >Save</Button>
+            </div>
         </Form>
         )
     }
