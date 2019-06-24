@@ -64,8 +64,10 @@ app.put('/api/clientHorseInfo', clientController.updateClientHorseInfo)
 app.delete(`/api/clientHorseInfo/:id`, clientController.deleteOneHorse)
 
 // adminController
-// gets all clients schedule meetings
+// gets all clients schedule pending is null meetings
 app.get('/api/schedules', adminController.getClientSchedules)
+// get all clients schedule pening = true meetings
+app.get('/api/approvedSchedules', adminController.getClientMeetingsApproved)
 // update the meetings time, date and pending true/false
 app.put('/api/schedule', adminController.updateMeetingInfo)
 

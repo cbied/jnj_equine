@@ -3,8 +3,14 @@
 
 const getClientSchedules = async (req,res) => {
     const db = req.app.get('db')
-    const allMeetings = await db.get_all_pending_meetings();
-    return res.status(200).send(allMeetings)
+    const pendingMeetings = await db.get_all_pending_meetings();
+    return res.status(200).send(pendingMeetings)
+}
+
+const getClientMeetingsApproved = async (req,res) => {
+    const db = req.app.get('db')
+    const approvedMeetings = await db.get_all_approved_meetings();
+    return res.status(200).send(approvedMeetings)
 }
 
 const deleteOneSchedule = (req,res) => {
@@ -30,5 +36,6 @@ const updateMeetingInfo = (req,res) => {
 module.exports = {
     getClientSchedules,
     deleteOneSchedule,
-    updateMeetingInfo
+    updateMeetingInfo,
+    getClientMeetingsApproved
 }

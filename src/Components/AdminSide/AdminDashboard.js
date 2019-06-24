@@ -9,8 +9,11 @@ export class AdminDashboard extends Component {
         this.state = {
             meetings: [],
             clientInfo: [],
+            approvedMeetings: [],
             modal: false,
+            modalApproved: false,
             activeMeeting: 0,
+            activeApprovedMeeting: 0,
             meeting_time: '',
             meeting_date: '',
             price: null,
@@ -22,6 +25,7 @@ export class AdminDashboard extends Component {
     componentDidMount() {
         this.getClientMeeting()
         this.getClientInfo()
+        this.getClientApprovedMeetings()
     }
 
     handleChange = e => {
@@ -33,6 +37,13 @@ export class AdminDashboard extends Component {
             .get('/api/schedules')
             .then(response => this.setState({ meetings: response.data }))
             .catch(err => console.log(`admin-getClientMeeting ${err}`))
+    }
+
+    getClientApprovedMeetings = () => {
+        axios
+        .get('/api/approvedSchedules')
+            .then(response => this.setState({ approvedMeetings: response.data }))
+            .catch(err => console.log(`admin-getClientApprovedMeeting ${err}`))
     }
 
     getClientInfo = () => {
@@ -72,15 +83,27 @@ export class AdminDashboard extends Component {
             })
         }
         }
+
+    toggleApproved = (index) => {
+        this.setState(prevState => ({
+            modalApproved: !prevState.modal,
+        }));
+        if(typeof index === 'number') {
+            this.setState({ 
+                activeApprovedMeeting: index,
+            })
+        }
+        }
     
     render() {
-        let { meetings, activeMeeting, clientInfo, activeClient } = this.state
+        let { meetings, activeMeeting, clientInfo, approvedMeetings, activeApprovedMeeting } = this.state
         console.log('clientInfo')
         console.log(clientInfo)
         console.log('meetings')
         console.log(meetings)
-        // console.log()
-        // console.log(clientInfo[meetings[activeClient].client_id])
+        console.log('approved meetings')
+        console.log(approvedMeetings)
+        console.log(this.state.modalApproved)
         let displayMeetings = meetings.map((meeting, index) => {
             return (
                 <tr key={meeting.id}
@@ -90,6 +113,20 @@ export class AdminDashboard extends Component {
                     <td>{meeting.horse}</td>
                     <td>{meeting.date}</td>
                     <td>{meeting.time_range_one} to {meeting.time_range_two}</td>
+                    <td>{meeting.select_payment}</td>
+                </tr>
+            )
+        })
+
+        let displayApprovedMeetings = approvedMeetings.map((meeting, index) => {
+            return (
+                <tr key={meeting.id}
+                onClick={() => {
+                    this.toggleApproved(index)}}
+                >
+                    <td>{meeting.horse}</td>
+                    <td>{meeting.meeting_date}</td>
+                    <td>{meeting.meeting_time}</td>
                     <td>{meeting.select_payment}</td>
                 </tr>
             )
@@ -126,6 +163,7 @@ export class AdminDashboard extends Component {
         return (
             <div>
                 <h2>Welcome {this.props.username}</h2>
+                <h3>Pending meetings</h3>
                 <Table hover>
                     <thead>
                         <tr>
@@ -139,7 +177,7 @@ export class AdminDashboard extends Component {
                     {displayMeetings}
                     </tbody>
                 </Table>
-                <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
+                <Modal isOpen={this.state.modal} toggle={this.toggle}>
                     <ModalBody>
                         {meetings.length ? (
                             <div>
@@ -237,11 +275,94 @@ export class AdminDashboard extends Component {
                 </Modal>
 
                 
-                {/* <Button type="submit" color='outline-danger'
-                onClick={() => this.props.logout()}>
-                    Logout
-                </Button> */}
-            </div>
+                <h3>Approved Meetings</h3>
+                <Table hover>
+                    <thead>
+                        <tr>
+                            <th scope="row">Horse</th>
+                            <th>Date</th>
+                            <th>Time</th>
+                            <th>Payment Type</th>
+                        </tr>
+                        </thead>
+                    <tbody>
+                    {displayApprovedMeetings}
+                    </tbody>
+                </Table> 
+                <Modal isOpen={this.state.modalApproved} toggle={this.toggleApproved}>
+                    <ModalBody>
+                        {approvedMeetings.length ? (
+                            <div>
+                            <ModalHeader toggle={this.toggleApproved}>{approvedMeetings[activeMeeting].horse}</ModalHeader>
+                            <Table striped>
+                            <tbody>
+                                <tr>
+                                <td>Meeting Date</td>
+                                <td>{approvedMeetings[activeApprovedMeeting].meeting_date}</td>
+                                </tr>
+                                <tr>
+                                <td>Meeting Time</td>
+                                <td>{approvedMeetings[activeApprovedMeeting].meeting_time}</td>
+                                </tr>
+                                <tr>
+                                <td>Price:</td>
+                                <td>${approvedMeetings[activeApprovedMeeting].price}</td>
+                                <td>add toggle here</td>
+                                </tr>
+                            </tbody>
+                            </Table>
+                            <div>
+
+                                <Button color="primary" id="togglerHorseInfo" style={{ marginBottom: '1rem', marginRight:'1rem' }}>
+                                Horse Info
+                                </Button>
+                                <Button color="success" id="togglerClientInfo" style={{ marginBottom: '1rem', marginRight:'1rem' }}>
+                                Client Info
+                                </Button>
+                                <Button color="primary" id="togglerMeetingInfo" style={{ marginBottom: '1rem' }}>
+                                Meeting Info
+                                </Button>
+
+
+                                <UncontrolledCollapse toggler="#togglerHorseInfo">
+                                <Card>
+                                    <CardBody>
+                                    {/* {clientInfo[meetings[activeClient]]} */}
+                                    </CardBody>
+                                </Card>
+                                </UncontrolledCollapse>
+                                
+                                <UncontrolledCollapse toggler="#togglerClientInfo">
+                                <Card>
+                                    <CardBody>
+                                    {/* Horse Info clientInfo */}
+                                    </CardBody>
+                                </Card>
+                                </UncontrolledCollapse>
+
+                                <UncontrolledCollapse toggler="#togglerMeetingInfo">
+                                <Card>
+                                    <CardBody>
+                                    {displayMeetingDetails}
+                                    </CardBody>
+                                </Card>
+                                </UncontrolledCollapse>
+                            </div>
+                            </div>
+                        )
+                        :
+                        null}
+                    
+                    </ModalBody>
+                    <ModalFooter>
+
+                        <Button color="secondary" 
+                        onClick={() => this.setState({modalApproved: false})}
+                        >Cancel</Button>
+
+                    </ModalFooter>
+                </Modal>
+                </div>
         )
     }
 }

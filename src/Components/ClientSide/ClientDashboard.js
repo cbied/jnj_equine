@@ -60,19 +60,21 @@ export class ClientDashboard extends Component {
 
 
 
+
     render() {
         let { name, meetings } = this.state
         console.log(meetings)
+        
+
         let displayMeetings = meetings.map(meeting => {   
-            console.log(meeting.pending)
             if(meeting.pending === null) {
                 return (
                 <tr key={meeting.id} className='pending'>
                     <td>{meeting.horse}</td>
                     <td>{meeting.date}</td>
                     <td>{meeting.time_range_one} to {meeting.time_range_two}</td>
-                    {/* <td>{meeting.select_payment}</td> */}
                     <td>Pending</td>
+                    <td>{meeting.select_payment}/Pending</td>
                 </tr>
                 )
             } else if (meeting.pending === true) {
@@ -81,8 +83,8 @@ export class ClientDashboard extends Component {
                     <td>{meeting.horse}</td>
                     <td>{meeting.meeting_date}</td>
                     <td>{meeting.meeting_time}</td>
-                    {/* <td>{meeting.select_payment}</td> */}
                     <td>Approved</td>
+                    <td>{meeting.select_payment}/${meeting.price}</td>
                 </tr> 
                 ) 
             } else {
@@ -106,7 +108,8 @@ export class ClientDashboard extends Component {
                             <th scope="row">Horse</th>
                             <th>Date</th>
                             <th>Time</th>
-                            {/* <th>Payment Type</th> */}
+                            <th>Appt</th>
+                            <th>Amount Due</th>
                         </tr>
                         </thead>
                     <tbody>
@@ -123,9 +126,6 @@ export class ClientDashboard extends Component {
                     name={name}
                     />
                 
-                <div>
-                    <h3>Balance: $150</h3>
-                </div>
             </div>
         )
     }
