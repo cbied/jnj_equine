@@ -78,8 +78,6 @@ export class AdminDashboard extends Component {
         })
     }
 
-     // add endpoint for put to update paid, make function in backend to update paid, 
-    // make function for axios.put, make updatePaid function
     updatePaid = (index) => {
         let { paid, approvedMeetings} = this.state,
             { id } = approvedMeetings[index];
@@ -107,6 +105,7 @@ export class AdminDashboard extends Component {
     }
 
     toggle = (index) => {
+        console.log(index)
         this.setState(prevState => ({
             modal: !prevState.modal,
         }));
@@ -138,9 +137,9 @@ export class AdminDashboard extends Component {
         console.log(clientInfo)
         console.log('meetings')
         console.log(meetings)
-        console.log('approved meetings')
-        console.log(approvedMeetings)
-        console.log(this.state.modalApproved)
+        // console.log('approved meetings')
+        // console.log(approvedMeetings)
+        console.log(activeMeeting)
         let displayMeetings = meetings.map((meeting, index) => {
             return (
                 <tr key={meeting.id}
@@ -189,31 +188,83 @@ export class AdminDashboard extends Component {
             
         })
 
-        let displayClientInfo = clientInfo.map((client,index) => {
-
+        let displayClientInfo = clientInfo.map(client => {
+            return (
+                <CardBody key={client.id}>
+                <tr>
+                    <th>Name</th> {'  '}
+                    <td>{client.firstname} {client.lastname}</td>
+                </tr>
+                <tr>
+                    <th>Number</th> {'  '}
+                    <td>{client.phonenumber}</td>
+                </tr>
+                <tr>
+                    <th>email</th> {'  '}
+                    <td>{client.email}</td>
+                </tr>
+                <tr>
+                    <th>Address</th> {'  '}
+                    <td>{client.address} {client.city} {client.state}</td>
+                </tr>
+                </CardBody>
+            )
         })
 
-        let displayHorseInfo = clientInfo.map((horse,index) => {
-
+        let displayHorseInfo = clientInfo.map(horse => {
+            return (
+                <CardBody key={horse.horse_id}>
+                <tr>
+                    <th>Name</th> {'  '}
+                    <td>{horse.name}</td>
+                </tr>
+                <tr>
+                    <th>Age</th> {'  '}
+                    <td>{horse.age}</td>
+                </tr>
+                <tr>
+                    <th>Breed</th> {'  '}
+                    <td>{horse.breed}</td>
+                </tr>
+                <tr>
+                    <th>Gender</th> {'  '}
+                    <td>{horse.gender}</td>
+                </tr>
+                <tr>
+                    <th>Discipline</th> {'  '}
+                    <td>{horse.discipline}</td>
+                </tr>
+                <tr>
+                    <th>Past Injuries</th> {'  '}
+                    <td>{horse.past_injuries}</td>
+                </tr>
+                <tr>
+                    <th>In Foal?</th>
+                    <td>{horse.pregnant}</td>
+                </tr>
+                <tr>
+                    <td>{horse.expected_pregnancy_date}</td>
+                </tr>
+                </CardBody>
+            )
+                
         })
 
         // does not work
-        let displayMeetingDetails = meetings.map((meeting,index) => {
+        let displayMeetingDetails = meetings.map(meeting => {
             return (
-                <div key={meeting.id}>
+                <CardBody key={meeting.id}>
                     <tr>
                         <th>Description of problem</th>
                     </tr>
                     <tr >
                         <td>{meeting.description_of_problem}</td>
                     </tr>
-                    
                     <tr>
                         <th>Payment type</th>
                         <td>{meeting.select_payment}</td>
                     </tr>
-                </div>
-                
+                </CardBody>  
             )
         })
 
@@ -281,25 +332,25 @@ export class AdminDashboard extends Component {
 
                                 <UncontrolledCollapse toggler="#togglerHorseInfo">
                                 <Card>
-                                    <CardBody>
-                                    {/* {clientInfo[meetings[activeClient]]} */}
-                                    </CardBody>
+
+                                    {displayHorseInfo[activeMeeting]}
+
                                 </Card>
                                 </UncontrolledCollapse>
                                 
                                 <UncontrolledCollapse toggler="#togglerClientInfo">
                                 <Card>
-                                    <CardBody>
-                                    {/* Horse Info clientInfo */}
-                                    </CardBody>
+                                    
+                                    {displayClientInfo[activeMeeting]}
+                                
                                 </Card>
                                 </UncontrolledCollapse>
 
                                 <UncontrolledCollapse toggler="#togglerMeetingInfo">
                                 <Card>
-                                    <CardBody>
-                                    {displayMeetingDetails}
-                                    </CardBody>
+                                    
+                                    {displayMeetingDetails[activeMeeting]}
+                                    
                                 </Card>
                                 </UncontrolledCollapse>
                             </div>
@@ -397,24 +448,20 @@ export class AdminDashboard extends Component {
 
                                 <UncontrolledCollapse toggler="#togglerHorseInfo">
                                 <Card>
-                                    <CardBody>
-                                    {/* {clientInfo[meetings[activeClient]]} */}
-                                    </CardBody>
+                                    {displayHorseInfo[activeApprovedMeeting]}
                                 </Card>
                                 </UncontrolledCollapse>
                                 
                                 <UncontrolledCollapse toggler="#togglerClientInfo">
                                 <Card>
-                                    <CardBody>
-                                    {/* Horse Info clientInfo */}
-                                    </CardBody>
+                                    {displayClientInfo[activeApprovedMeeting]}
                                 </Card>
                                 </UncontrolledCollapse>
 
                                 <UncontrolledCollapse toggler="#togglerMeetingInfo">
                                 <Card>
                                     <CardBody>
-                                    {displayMeetingDetails}
+                                    {displayMeetingDetails[activeApprovedMeeting]}
                                     </CardBody>
                                 </Card>
                                 </UncontrolledCollapse>

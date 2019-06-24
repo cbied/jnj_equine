@@ -74,8 +74,6 @@ app.put('/api/schedule', adminController.updateMeetingInfo)
 app.put('/api/meetingPaid', adminController.updatePaid)
 
 
-
-
 // stripe checkout
 app.post("/checkout", stripeController.chargeCard);
 
