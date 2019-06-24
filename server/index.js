@@ -70,6 +70,8 @@ app.get('/api/schedules', adminController.getClientSchedules)
 app.get('/api/approvedSchedules', adminController.getClientMeetingsApproved)
 // update the meetings time, date and pending true/false
 app.put('/api/schedule', adminController.updateMeetingInfo)
+// update meeting paid for 
+app.put('/api/meetingPaid', adminController.updatePaid)
 
 
 

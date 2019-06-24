@@ -13,7 +13,7 @@ const registerHorse = (req,res) => {
 
 const scheduleMeeting = async (req,res) => {
     const db = req.app.get('db'),
-        { date, time1, time2, description, payment, horse, horses} = req.body;
+        { date, time1, time2, description, payment, horse} = req.body;
     
         const scheduleMeeting = await db.create_meeting( [req.session.user.id, date, time1, time2, description, payment, horse] )
         return res.status(200).send(scheduleMeeting)

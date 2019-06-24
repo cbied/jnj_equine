@@ -99,7 +99,7 @@ export class ClientDashboard extends Component {
             )
         return (
             <div className="App">
-               
+
                 <h1>Welcome {this.props.username}</h1>
 
                 <Table hover>

@@ -56,6 +56,15 @@ $approved: #14a76c;
   }
 }
 
+// AdminDashboard
+.paid {
+  background: $approved
+}
+
+.unpaid {
+  background: $pending
+}
+
 
 
 @media only screen and (max-width: 500px) {

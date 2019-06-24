@@ -37,6 +37,7 @@ export class ClientScheduleMeeting extends Component {
                 .catch(() => alert('No horses'));
     }
 
+
     postMeeting = () => {
         let {horse, date, time1, time2, description, payment, horses} = this.state
         console.log(horses.indexOf(horse))

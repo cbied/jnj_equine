@@ -26,10 +26,20 @@ const updateMeetingInfo = (req,res) => {
     const db = req.app.get('db'),
     { id, meeting_time, meeting_date, price, pending } = req.body;
         // { id } = req.params;
-    console.log(req.body)
-    db.edit_meeting( id, meeting_time, meeting_date, price, pending )
+
+    db.edit_meeting( id, meeting_date, meeting_time, price, pending )
         .then(response => res.status(200).json(response))
-        .catch(error => res.status(500).send(`controller-updateOne: ${error}`))
+        .catch(error => res.status(500).send(`adminController-updateMeetingInfo: ${error}`))
+}
+
+const updatePaid = (req,res) => {
+    const db = req.app.get('db'),
+    { id, paid } = req.body;
+    console.log(req.body)
+
+    db.update_paid( id, paid)
+        .then(response => res.status(200).json(response))
+        .catch(error => res.status(500).send(`adminController-updatePaid: ${error}`))
 }
 
 
@@ -37,5 +47,6 @@ module.exports = {
     getClientSchedules,
     deleteOneSchedule,
     updateMeetingInfo,
-    getClientMeetingsApproved
+    getClientMeetingsApproved,
+    updatePaid
 }

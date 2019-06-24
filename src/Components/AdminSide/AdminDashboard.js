@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import { Button, Table, Modal, ModalHeader, ModalBody, ModalFooter, Input, UncontrolledCollapse, CardBody, Card } from 'reactstrap'
+import { Button, Table, Modal, ModalHeader, ModalBody, ModalFooter, 
+    Input, UncontrolledCollapse, CardBody, Card, FormGroup, Label, CustomInput } from 'reactstrap'
 import { connect } from 'react-redux'
 import axios from 'axios'
 
@@ -18,7 +19,9 @@ export class AdminDashboard extends Component {
             meeting_date: '',
             price: null,
             pending: null,
-            meetingDetails: {}
+            meetingDetails: {},
+            paidDetails: {},
+            paid: true
         }
     }
 
@@ -58,9 +61,11 @@ export class AdminDashboard extends Component {
         let { id } = meetings[index]
         pending = bool
         axios
-            .put('/api/schedule', { id, meeting_time, meeting_date, price, pending })
+            .put('/api/schedule', { id, meeting_date, meeting_time, price, pending })
             .then(user => {  
                 this.meetingUpdate(user.data);
+                this.getClientApprovedMeetings()
+                this.getClientMeeting()
             })
             .catch(err => {
                 alert(err.response.request.response);
@@ -70,6 +75,34 @@ export class AdminDashboard extends Component {
     meetingUpdate = (meetingDetails) => {
         this.setState({
             meetingDetails, 
+        })
+    }
+
+     // add endpoint for put to update paid, make function in backend to update paid, 
+    // make function for axios.put, make updatePaid function
+    updatePaid = (index) => {
+        let { paid, approvedMeetings} = this.state,
+            { id } = approvedMeetings[index];
+            // this.setState({ paid: false })
+            if(paid === true) {
+                this.setState({ paid: false })
+            } else {
+                this.setState({ paid: true })
+            }
+        axios
+            .put('/api/meetingPaid', { id, paid })
+            .then(user => {
+                this.paidUpdate(user.data)
+                this.getClientApprovedMeetings()
+            })
+            .catch(err => {
+                alert(err.response.request.response);
+            });
+    }
+
+    paidUpdate = (paidDetails) => {
+        this.setState({
+            paidDetails,
         })
     }
 
@@ -94,7 +127,11 @@ export class AdminDashboard extends Component {
             })
         }
         }
+
+   
     
+
+
     render() {
         let { meetings, activeMeeting, clientInfo, approvedMeetings, activeApprovedMeeting } = this.state
         console.log('clientInfo')
@@ -120,16 +157,36 @@ export class AdminDashboard extends Component {
 
         let displayApprovedMeetings = approvedMeetings.map((meeting, index) => {
             return (
-                <tr key={meeting.id}
-                onClick={() => {
-                    this.toggleApproved(index)}}
-                >
-                    <td>{meeting.horse}</td>
-                    <td>{meeting.meeting_date}</td>
-                    <td>{meeting.meeting_time}</td>
-                    <td>{meeting.select_payment}</td>
-                </tr>
+                meeting.paid  ? 
+                    (
+                    <tr key={meeting.id} className="paid"
+                    onClick={() => {
+                        this.toggleApproved(index)}}
+                    >
+                        <td>{meeting.horse}</td>
+                        <td>{meeting.meeting_date}</td>
+                        <td>{meeting.meeting_time}</td>
+                        <td>{meeting.select_payment}</td>
+                    </tr>
+                    )
+                    : 
+                    (
+                    <tr key={meeting.id} className="unpaid"
+                    onClick={() => {
+                        this.toggleApproved(index)}}
+                    >
+                        <td>{meeting.horse}</td>
+                        <td>{meeting.meeting_date}</td>
+                        <td>{meeting.meeting_time}</td>
+                        <td>{meeting.select_payment}</td>
+                    </tr>
+                    )
+                
+
             )
+            
+                
+            
         })
 
         let displayClientInfo = clientInfo.map((client,index) => {
@@ -289,29 +346,43 @@ export class AdminDashboard extends Component {
                     {displayApprovedMeetings}
                     </tbody>
                 </Table> 
+                {/* display green if approvedMeetings[activeApprovedMeeting].paid === true */}
                 <Modal isOpen={this.state.modalApproved} toggle={this.toggleApproved}>
                     <ModalBody>
                         {approvedMeetings.length ? (
                             <div>
-                            <ModalHeader toggle={this.toggleApproved}>{approvedMeetings[activeMeeting].horse}</ModalHeader>
-                            <Table striped>
-                            <tbody>
-                                <tr>
-                                <td>Meeting Date</td>
-                                <td>{approvedMeetings[activeApprovedMeeting].meeting_date}</td>
-                                </tr>
-                                <tr>
-                                <td>Meeting Time</td>
-                                <td>{approvedMeetings[activeApprovedMeeting].meeting_time}</td>
-                                </tr>
-                                <tr>
-                                <td>Price:</td>
-                                <td>${approvedMeetings[activeApprovedMeeting].price}</td>
-                                <td>add toggle here</td>
-                                </tr>
-                            </tbody>
-                            </Table>
-                            <div>
+                                <ModalHeader toggle={this.toggleApproved}>{approvedMeetings[activeMeeting].horse}</ModalHeader>
+                                <Table striped>
+                                <tbody>
+                                    <tr>
+                                    <td>Meeting Date</td>
+                                    <td>{approvedMeetings[activeApprovedMeeting].meeting_date}</td>
+                                    </tr>
+                                    <tr>
+                                    <td>Meeting Time</td>
+                                    <td>{approvedMeetings[activeApprovedMeeting].meeting_time}</td>
+                                    </tr>
+                                    <tr>
+                                    <td>Price</td>
+                                    <td>${approvedMeetings[activeApprovedMeeting].price}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Paid</td>
+                                        <FormGroup>
+                                        <Label>
+                                        <Button 
+                                        onClick={() => {
+                                            this.updatePaid(activeApprovedMeeting)
+                                        }}
+                                        >
+                                        Paid
+                                        </Button>
+                                        </Label>
+                                    </FormGroup>
+                                    </tr>
+                                </tbody>
+                                </Table>
+                                <div>
 
                                 <Button color="primary" id="togglerHorseInfo" style={{ marginBottom: '1rem', marginRight:'1rem' }}>
                                 Horse Info
