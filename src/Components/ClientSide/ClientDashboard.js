@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import StripeCheckout from 'react-stripe-checkout';
 import { Table } from 'reactstrap';
+import StripeCheckout from 'react-stripe-checkout';
 import { toast } from 'react-toastify'
 import "react-toastify/dist/ReactToastify.css";
 import { connect } from 'react-redux'
@@ -22,6 +22,7 @@ export class ClientDashboard extends Component {
 
     componentDidMount() {
         this.getClientMeeting()
+        this.props.toggleNav()
     }
 
     toggleNavbar = () => {
@@ -101,6 +102,15 @@ export class ClientDashboard extends Component {
             <div className="App">
 
                 <h1>Welcome {this.props.username}</h1>
+  
+                <StripeCheckout className='mb-3'
+                    stripeKey="pk_test_IkGproX6Ez7mOrXs9140j7mj00L31UfDex"
+                    token={this.handleToken}
+                    billingAddress
+                    shippingAddress
+                    amount={150 * 100}
+                    name={name}
+                    />
 
                 <Table hover>
                     <thead>
@@ -117,14 +127,7 @@ export class ClientDashboard extends Component {
                     </tbody>
                 </Table>
 
-                <StripeCheckout className='mb-3'
-                    stripeKey="pk_test_IkGproX6Ez7mOrXs9140j7mj00L31UfDex"
-                    token={this.handleToken}
-                    billingAddress
-                    shippingAddress
-                    amount={150 * 100}
-                    name={name}
-                    />
+                
                 
             </div>
         )

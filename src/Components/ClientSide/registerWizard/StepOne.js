@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Col, Row, Button, Form, FormGroup, Label, Input } from 'reactstrap';
+import StepTwo from './StepTwo'
+import { Col, Row, Button, Form, FormGroup, Label, Input, ModalBody, Modal, ModalHeader } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import axios from 'axios'
 
@@ -19,7 +20,8 @@ class StepOne extends Component {
             username: '',
             password: '',
             isAdmin: false,
-            user: {}
+            user: {},
+            modalHorseRegistration: false
         }
 
         
@@ -49,6 +51,18 @@ class StepOne extends Component {
                 this.setState({ username: '', password: '' });
                 alert(err.response.request.response);
             });
+    }
+
+    toggleHorseRegistration = () => {
+        this.setState(prevState => ({
+            modal: !prevState.modal
+        }));
+    }
+    
+    modalHorseRegistration = () => {
+        this.setState(prevState => ({
+            modalHorseRegistration: !prevState.modal
+        }));
     }
 
 
@@ -84,7 +98,7 @@ class StepOne extends Component {
                     />
                 </FormGroup>
             </Col>
-            <Col md={3}>
+            <Col md={4}>
                 <FormGroup>
                     <Label for="city">City</Label>
                     <Input type="text" name="city" value={city} placeholder="Topsail"
@@ -92,7 +106,7 @@ class StepOne extends Component {
                     />
                 </FormGroup>
             </Col>
-            <Col md={1}>
+            <Col md={2}>
                 <FormGroup>
                     <Label for="state">State</Label>
                     <Input type="text" name="state" value={state} placeholder="NC"
@@ -103,7 +117,7 @@ class StepOne extends Component {
             </Row>
             
             <Row form>
-                <Col md={4}>
+                <Col md={5}>
                 <FormGroup>
                     <Label for="phoneNumber">Phone Number</Label>
                     <Input type="text" name="phoneNumber" value={phoneNumber} placeholder="(910)-867-5309"
@@ -111,7 +125,7 @@ class StepOne extends Component {
                     />
                 </FormGroup>
                 </Col>
-                <Col md={4}>
+                <Col md={5}>
                 <FormGroup>
                     <Label for="email">Email</Label>
                     <Input type="email" name="email" value={email} placeholder="yourEmail@gmail.com"
@@ -119,7 +133,10 @@ class StepOne extends Component {
                     />
                 </FormGroup>
                 </Col>
-                <Col md={2}>
+                
+            </Row>
+            <Row>
+            <Col md={5}>
                 <FormGroup>
                     <Label for="username">Username</Label>
                     <Input type="text" name="username" value={username} placeholder="iHeartMyHorse"
@@ -127,7 +144,7 @@ class StepOne extends Component {
                     />
                 </FormGroup>  
                 </Col>
-                <Col md={2}>
+                <Col md={6}>
                 <FormGroup>
                     <Label for="password">Password</Label>
                     <Input type="password" name="password" value={password}
@@ -136,11 +153,28 @@ class StepOne extends Component {
                 </FormGroup>  
                 </Col>
             </Row>
-            <Link to="/wizard/step_two">
+
+
             <Button
-                onClick={() => this.register()}
-            >Next</Button>
-            </Link>
+                onClick={() => {
+                    this.props.modalRegistrationFn()
+                    this.props.toggleRegistrationFn()
+                    this.props.modalRegistrationFn()
+                    this.props.toggleRegistrationFn()
+                }}
+            >Cancel</Button>
+        
+            <Button
+                onClick={() => {
+                    this.register()
+                    this.props.modalRegistrationFn()
+                    this.props.toggleRegistrationFn()
+                    this.props.modalRegistrationFn()
+                    this.props.toggleRegistrationFn()
+                    alert('Your are registered! Login in and add a horse to your profile.')
+                }}
+            >Register</Button>
+        
         </Form>
         )
     }

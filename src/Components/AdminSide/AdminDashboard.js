@@ -9,7 +9,6 @@ export class AdminDashboard extends Component {
         super(props)
         this.state = {
             meetings: [],
-            clientInfo: [],
             approvedMeetings: [],
             modal: false,
             modalApproved: false,
@@ -27,8 +26,9 @@ export class AdminDashboard extends Component {
 
     componentDidMount() {
         this.getClientMeeting()
-        this.getClientInfo()
+        // this.getClientInfo()
         this.getClientApprovedMeetings()
+        // this.getClientInfoApproved()
     }
 
     handleChange = e => {
@@ -38,7 +38,9 @@ export class AdminDashboard extends Component {
     getClientMeeting = () => {
         axios
             .get('/api/schedules')
-            .then(response => this.setState({ meetings: response.data }))
+            .then(response => {
+                this.setState({ meetings: response.data })
+            })
             .catch(err => console.log(`admin-getClientMeeting ${err}`))
     }
 
@@ -49,12 +51,6 @@ export class AdminDashboard extends Component {
             .catch(err => console.log(`admin-getClientApprovedMeeting ${err}`))
     }
 
-    getClientInfo = () => {
-        axios
-            .get('/api/clientInfo')
-            .then(response => this.setState({ clientInfo: response.data}))
-            .catch(err => console.log(`admin-getClientInfo ${err}`))
-    }
 
     updateMeeting = (index, bool) => {
         let { meeting_time, meeting_date, price, pending, meetings } = this.state
@@ -65,6 +61,7 @@ export class AdminDashboard extends Component {
             .then(user => {  
                 this.meetingUpdate(user.data);
                 this.getClientApprovedMeetings()
+                // this.getClientInfoApproved()
                 this.getClientMeeting()
             })
             .catch(err => {
@@ -105,7 +102,6 @@ export class AdminDashboard extends Component {
     }
 
     toggle = (index) => {
-        console.log(index)
         this.setState(prevState => ({
             modal: !prevState.modal,
         }));
@@ -127,19 +123,15 @@ export class AdminDashboard extends Component {
         }
         }
 
-   
-    
-
-
     render() {
-        let { meetings, activeMeeting, clientInfo, approvedMeetings, activeApprovedMeeting } = this.state
-        console.log('clientInfo')
-        console.log(clientInfo)
+        let { meetings, activeMeeting, 
+            approvedMeetings, activeApprovedMeeting} = this.state
         console.log('meetings')
         console.log(meetings)
-        // console.log('approved meetings')
-        // console.log(approvedMeetings)
+        console.log('approved meetings')
+        console.log(approvedMeetings)
         console.log(activeMeeting)
+        
         let displayMeetings = meetings.map((meeting, index) => {
             return (
                 <tr key={meeting.id}
@@ -180,77 +172,12 @@ export class AdminDashboard extends Component {
                         <td>{meeting.select_payment}</td>
                     </tr>
                     )
-                
-
             )
             
                 
             
         })
 
-        let displayClientInfo = clientInfo.map(client => {
-            return (
-                <CardBody key={client.id}>
-                <tr>
-                    <th>Name</th> {'  '}
-                    <td>{client.firstname} {client.lastname}</td>
-                </tr>
-                <tr>
-                    <th>Number</th> {'  '}
-                    <td>{client.phonenumber}</td>
-                </tr>
-                <tr>
-                    <th>email</th> {'  '}
-                    <td>{client.email}</td>
-                </tr>
-                <tr>
-                    <th>Address</th> {'  '}
-                    <td>{client.address} {client.city} {client.state}</td>
-                </tr>
-                </CardBody>
-            )
-        })
-
-        let displayHorseInfo = clientInfo.map(horse => {
-            return (
-                <CardBody key={horse.horse_id}>
-                <tr>
-                    <th>Name</th> {'  '}
-                    <td>{horse.name}</td>
-                </tr>
-                <tr>
-                    <th>Age</th> {'  '}
-                    <td>{horse.age}</td>
-                </tr>
-                <tr>
-                    <th>Breed</th> {'  '}
-                    <td>{horse.breed}</td>
-                </tr>
-                <tr>
-                    <th>Gender</th> {'  '}
-                    <td>{horse.gender}</td>
-                </tr>
-                <tr>
-                    <th>Discipline</th> {'  '}
-                    <td>{horse.discipline}</td>
-                </tr>
-                <tr>
-                    <th>Past Injuries</th> {'  '}
-                    <td>{horse.past_injuries}</td>
-                </tr>
-                <tr>
-                    <th>In Foal?</th>
-                    <td>{horse.pregnant}</td>
-                </tr>
-                <tr>
-                    <td>{horse.expected_pregnancy_date}</td>
-                </tr>
-                </CardBody>
-            )
-                
-        })
-
-        // does not work
         let displayMeetingDetails = meetings.map(meeting => {
             return (
                 <CardBody key={meeting.id}>
@@ -268,8 +195,26 @@ export class AdminDashboard extends Component {
             )
         })
 
+        let displayApprovedMeetingDetails = approvedMeetings.map(meeting => {
+            return (
+                <CardBody key={meeting.id}>
+                    <tr>
+                        <th>Description of problem</th>
+                    </tr>
+                    <tr >
+                        <td>{meeting.description_of_problem}</td>
+                    </tr>
+                    <tr>
+                        <th>Payment type</th>
+                        <td>{meeting.select_payment}</td>
+                    </tr>
+                </CardBody>  
+            )
+        })
+
+
         return (
-            <div>
+            <div className="adminDash">
                 <h2>Welcome {this.props.username}</h2>
                 <h3>Pending meetings</h3>
                 <Table hover>
@@ -319,32 +264,10 @@ export class AdminDashboard extends Component {
                             </Table>
                             <div>
 
-                                <Button color="primary" id="togglerHorseInfo" style={{ marginBottom: '1rem', marginRight:'1rem' }}>
-                                Horse Info
-                                </Button>
-                                <Button color="success" id="togglerClientInfo" style={{ marginBottom: '1rem', marginRight:'1rem' }}>
-                                Client Info
-                                </Button>
                                 <Button color="primary" id="togglerMeetingInfo" style={{ marginBottom: '1rem' }}>
                                 Meeting Info
                                 </Button>
 
-
-                                <UncontrolledCollapse toggler="#togglerHorseInfo">
-                                <Card>
-
-                                    {displayHorseInfo[activeMeeting]}
-
-                                </Card>
-                                </UncontrolledCollapse>
-                                
-                                <UncontrolledCollapse toggler="#togglerClientInfo">
-                                <Card>
-                                    
-                                    {displayClientInfo[activeMeeting]}
-                                
-                                </Card>
-                                </UncontrolledCollapse>
 
                                 <UncontrolledCollapse toggler="#togglerMeetingInfo">
                                 <Card>
@@ -402,7 +325,7 @@ export class AdminDashboard extends Component {
                     <ModalBody>
                         {approvedMeetings.length ? (
                             <div>
-                                <ModalHeader toggle={this.toggleApproved}>{approvedMeetings[activeMeeting].horse}</ModalHeader>
+                                <ModalHeader toggle={this.toggleApproved}>{approvedMeetings[activeApprovedMeeting].horse}</ModalHeader>
                                 <Table striped>
                                 <tbody>
                                     <tr>
@@ -417,51 +340,28 @@ export class AdminDashboard extends Component {
                                     <td>Price</td>
                                     <td>${approvedMeetings[activeApprovedMeeting].price}</td>
                                     </tr>
-                                    <tr>
-                                        <td>Paid</td>
-                                        <FormGroup>
-                                        <Label>
-                                        <Button 
+                                    
+                                </tbody>
+
+                                <Button 
                                         onClick={() => {
                                             this.updatePaid(activeApprovedMeeting)
                                         }}
                                         >
                                         Paid
                                         </Button>
-                                        </Label>
-                                    </FormGroup>
-                                    </tr>
-                                </tbody>
                                 </Table>
                                 <div>
 
-                                <Button color="primary" id="togglerHorseInfo" style={{ marginBottom: '1rem', marginRight:'1rem' }}>
-                                Horse Info
-                                </Button>
-                                <Button color="success" id="togglerClientInfo" style={{ marginBottom: '1rem', marginRight:'1rem' }}>
-                                Client Info
-                                </Button>
-                                <Button color="primary" id="togglerMeetingInfo" style={{ marginBottom: '1rem' }}>
+                                <Button color="primary" id="togglerApprovedMeetingInfo" style={{ marginBottom: '1rem' }}>
                                 Meeting Info
                                 </Button>
 
 
-                                <UncontrolledCollapse toggler="#togglerHorseInfo">
-                                <Card>
-                                    {displayHorseInfo[activeApprovedMeeting]}
-                                </Card>
-                                </UncontrolledCollapse>
-                                
-                                <UncontrolledCollapse toggler="#togglerClientInfo">
-                                <Card>
-                                    {displayClientInfo[activeApprovedMeeting]}
-                                </Card>
-                                </UncontrolledCollapse>
-
-                                <UncontrolledCollapse toggler="#togglerMeetingInfo">
+                                <UncontrolledCollapse toggler="#togglerApprovedMeetingInfo">
                                 <Card>
                                     <CardBody>
-                                    {displayMeetingDetails[activeApprovedMeeting]}
+                                    {displayApprovedMeetingDetails[activeApprovedMeeting]}
                                     </CardBody>
                                 </Card>
                                 </UncontrolledCollapse>

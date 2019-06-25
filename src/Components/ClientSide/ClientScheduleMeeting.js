@@ -108,8 +108,7 @@ export class ClientScheduleMeeting extends Component {
                     </FormGroup>
                     { this.state.payment === 'Credit Card' ?
                     <FormGroup>
-                        <Label for="message">On request, your meeting will be pending.
-                        If it is accepted, your balance will be added for you to pay</Label>
+                        <Label for="message">On request, your meeting will be pending.</Label>
                     </FormGroup>
                     :
                     false
@@ -138,7 +137,7 @@ export class ClientScheduleMeeting extends Component {
                         this.props.toggleScheduleFn()
                         this.props.modalScheduleFn()
                         this.props.toggleScheduleFn()
-                        alert("Your meeting is pending, Check back for confirmation")
+                        alert("Your meeting is pending, Check back soon for confirmation")
                     }}
                     >Request meeting
                     </Button>

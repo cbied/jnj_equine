@@ -4,6 +4,8 @@ import AdminDashboard from './AdminSide/AdminDashboard'
 import ClientProfile from './ClientSide/ClientProfile'
 import ListClientHorsesForUpdate from './ClientSide/ListClientHorsesForUpdate'
 import ClientSchedulerMeeting from './ClientSide/ClientScheduleMeeting'
+import ClientInfo from './AdminSide/ClientInfo'
+import StepOne from './ClientSide/registerWizard/StepOne'
 import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, Input, Button, Modal, ModalHeader, ModalBody, ModalFooter  } from 'reactstrap';
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
@@ -19,7 +21,8 @@ this.state = {
     modalProfile: false,
     modalHorseProfile: false,
     modal: false,
-    
+    modalClients: false,
+    modalRegistration: false
     };
 }
 
@@ -65,6 +68,30 @@ this.state = {
         }));
     }
 
+    toggleClientInfo = () => {
+        this.setState(prevState => ({
+            modal: !prevState.modal
+        }));
+    }
+    
+    modalClientInfo = () => {
+        this.setState(prevState => ({
+            modalClients: !prevState.modal
+        }));
+    }
+
+    toggleRegistration = () => {
+        this.setState(prevState => ({
+            modal: !prevState.modal
+        }));
+    }
+    
+    modalRegistration = () => {
+        this.setState(prevState => ({
+            modalRegistration: !prevState.modal
+        }));
+    }
+
     handleChange = e => {
         this.setState({ [e.target.name]: e.target.value })
     }
@@ -105,10 +132,10 @@ logout = () => {
 
 render() {
     const { username, password, user } = this.props
-    console.log(this.state.modalHorseProfile)
 return (
                 !user.id ? 
                 (
+                <div>
                 <Navbar color="faded" className="nav" light>
                 <NavbarBrand href="/" className="mr-auto">JnJ Equine Massage</NavbarBrand>
                 <NavbarToggler onClick={this.toggleNavbar} className="mr-2" />
@@ -123,8 +150,21 @@ return (
                 <Input placeholder="password" name="password" value={password} type="password"
                 onChange={e => this.props.handlePassword(e.target.value)}
                 />
-                <Link to="/wizard/step_one"><p>Not a member yet? register here</p></Link>
-                <Button
+
+                <Button color='outline-secondary' className='mb-3 mt-3' onClick={this.modalRegistration}>Register</Button>
+                
+                <Modal isOpen={this.state.modalRegistration} toggle={this.toggleRegistration} className={this.props.className}>
+                    <ModalHeader toggle={this.toggleRegistration}>Register</ModalHeader>
+                    <ModalBody>
+                        <StepOne 
+                        modalRegistrationFn={this.modalRegistration}
+                        toggleRegistrationFn={this.toggleRegistration}
+                        />
+                    </ModalBody>
+                </Modal>
+
+                
+                <Button color="primary"
                 onClick={() => {
                     this.logIn(username, password) 
                     
@@ -134,15 +174,19 @@ return (
                 </Nav>
                 </Collapse>
                 </Navbar>
+                
+                <div class="container">
+                    <div id="box1"></div>
+                    <div id="box2"></div>
+                    <div id="box3"></div>
+                    <div id="box4"></div>
+                </div>
+                </div>
                 )
             : 
             user.id && !user.isAdmin ?
             (
             <div className="center">
-            <ClientDashboard 
-            logout={this.logout}
-            />
-
             <Navbar color="faded" className="center" light>
             <NavbarBrand href="/" >JnJ Equine Massage</NavbarBrand>
             <NavbarToggler onClick={this.toggleNavbar} className="mb-2"/>
@@ -199,7 +243,11 @@ return (
             </Nav>
             </Collapse>
             </Navbar>
-           
+            
+            <ClientDashboard 
+            logout={this.logout}
+            toggleNav={this.toggleNavbar}
+            />
             
             </div>
             )
@@ -213,10 +261,22 @@ return (
             <Collapse isOpen={!this.state.collapsed} navbar>
             <Nav navbar>
             
-            <Button type="submit" color='outline-danger'
+            <Button type="submit" color='outline-danger' className="mb-3 mt-3"
                 onClick={() => this.logout()}>
                     Logout
             </Button>
+
+            <Button color='outline-secondary' className='mb-3' onClick={this.modalClientInfo}>Client Info</Button>
+            <Modal isOpen={this.state.modalClients} toggle={this.toggleClientInfo}>
+                <ModalHeader toggle={this.toggleClientInfo}>Client Info</ModalHeader>
+                <ModalBody>
+                    <ClientInfo 
+                    modalClientsFn={this.modalClientInfo}
+                    toggleClientInfoFn={this.toggleClientInfo}
+                    />
+                </ModalBody>
+            </Modal>
+            
 
             </Nav>
             </Collapse>

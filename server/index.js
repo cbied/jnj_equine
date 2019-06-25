@@ -40,8 +40,7 @@ app.post('/auth/login', authController.login)
 app.post('/auth/logout', authController.logout)
 
 
-// clientController and AdminController 
-app.get('/api/clientInfo', clientController.getClientMeetingInfo)
+
 
 
 // clientController
@@ -63,11 +62,18 @@ app.put('/api/clientHorseInfo', clientController.updateClientHorseInfo)
 // client can delete horse
 app.delete(`/api/clientHorseInfo/:id`, clientController.deleteOneHorse)
 
+// clientController and AdminController 
+app.get('/api/clientInfo', clientController.getClientMeetingInfo)
+
 // adminController
 // gets all clients schedule pending is null meetings
 app.get('/api/schedules', adminController.getClientSchedules)
 // get all clients schedule pening = true meetings
 app.get('/api/approvedSchedules', adminController.getClientMeetingsApproved)
+// get all client and horse info 
+app.get('/api/clientHorseInfoAdmin', adminController.getClientHorseInfoAdmin)
+// get client/horse info for approved meetings
+app.get('/api/clientHorseInfoApproved', adminController.clientHorseInfoApproved)
 // update the meetings time, date and pending true/false
 app.put('/api/schedule', adminController.updateMeetingInfo)
 // update meeting paid for 

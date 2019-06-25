@@ -13,6 +13,12 @@ const getClientMeetingsApproved = async (req,res) => {
     return res.status(200).send(approvedMeetings)
 }
 
+const clientHorseInfoApproved = async (req,res) => {
+    const db = req.app.get('db')
+    const clientHorseInfo = await db.get_client_horse_info_approved();
+    return res.status(200).send(clientHorseInfo)
+}
+
 const deleteOneSchedule = (req,res) => {
     const db = req.app.get('db'),
         { id } = req.params
@@ -42,11 +48,20 @@ const updatePaid = (req,res) => {
         .catch(error => res.status(500).send(`adminController-updatePaid: ${error}`))
 }
 
+const getClientHorseInfoAdmin = async (req,res) => {
+    const db = req.app.get('db')
+    
+    const info = await db.get_client_horse_info_admin()
+    return res.status(200).send(info)
+}
+
 
 module.exports = {
     getClientSchedules,
+    getClientMeetingsApproved,
+    clientHorseInfoApproved,
     deleteOneSchedule,
     updateMeetingInfo,
-    getClientMeetingsApproved,
-    updatePaid
+    updatePaid,
+    getClientHorseInfoAdmin
 }
