@@ -7,7 +7,6 @@ import ClientSchedulerMeeting from './ClientSide/ClientScheduleMeeting'
 import ClientInfo from './AdminSide/ClientInfo'
 import StepOne from './ClientSide/registerWizard/StepOne'
 import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, Input, Button, Modal, ModalHeader, ModalBody, ModalFooter  } from 'reactstrap';
-import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { handleUsername, handlePassword, handleUpdateUser } from '../redux/loginReducer'
 import axios from 'axios'
@@ -22,9 +21,35 @@ this.state = {
     modalHorseProfile: false,
     modal: false,
     modalClients: false,
-    modalRegistration: false
+    modalRegistration: false,
+    userData: null,
+
     };
 }
+
+    componentWillMount() {
+        let userName = localStorage.getItem('username') && this.props.handleUsername(JSON.parse(localStorage.getItem('username'))).payload
+        let userPassword = localStorage.getItem('password') && this.props.handlePassword(JSON.parse(localStorage.getItem('password'))).payload
+        console.log(userName)
+        console.log(userPassword)
+        this.logIn = () => {
+            axios
+                .post('/auth/login', { userName, userPassword })
+                .then(user => {
+                    console.log(user)
+                    this.setState({userData: user.data})
+                    this.props.handleUpdateUser(user.data) 
+                })
+                .catch(() => alert('Incorrect username or password'));
+        }
+    }
+
+    componentDidUpdate(nextProps, nextState) {
+        localStorage.setItem('username', JSON.stringify(this.props.username))
+        localStorage.setItem('password', JSON.stringify(this.props.password))
+    }
+
+
 
     toggleNavbar = () => {
         this.setState({
@@ -115,6 +140,7 @@ logIn = () => {
         .post('/auth/login', { username, password })
         .then(user => {
             console.log(user)
+            this.setState({userData: user.data})
             this.props.handleUpdateUser(user.data) 
         })
         .catch(() => alert('Incorrect username or password'));
@@ -135,7 +161,7 @@ render() {
 return (
                 !user.id ? 
                 (
-                <div>
+                <div className="home">
                 <Navbar color="faded" className="nav" light>
                 <NavbarBrand href="/" className="mr-auto">JnJ Equine Massage</NavbarBrand>
                 <NavbarToggler onClick={this.toggleNavbar} className="mr-2" />
@@ -266,7 +292,7 @@ return (
                     Logout
             </Button>
 
-            <Button color='outline-secondary' className='mb-3' onClick={this.modalClientInfo}>Client Info</Button>
+            <Button color='outline-primary' className='mb-3' onClick={this.modalClientInfo}>Client Info</Button>
             <Modal isOpen={this.state.modalClients} toggle={this.toggleClientInfo}>
                 <ModalHeader toggle={this.toggleClientInfo}>Client Info</ModalHeader>
                 <ModalBody>
@@ -283,6 +309,8 @@ return (
             </Navbar>
             <AdminDashboard 
             logout={this.logout}
+            toggleNav={this.toggleNavbar}
+            userData={this.state.userData}
             />
             </div>
             )

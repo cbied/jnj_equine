@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Button, Table, Modal, ModalHeader, ModalBody, ModalFooter, 
     Input, UncontrolledCollapse, CardBody, Card, FormGroup, Label, CustomInput } from 'reactstrap'
 import { connect } from 'react-redux'
+import { handleUpdateUser } from '../../redux/loginReducer'
 import axios from 'axios'
 
 export class AdminDashboard extends Component {
@@ -26,10 +27,15 @@ export class AdminDashboard extends Component {
 
     componentDidMount() {
         this.getClientMeeting()
-        // this.getClientInfo()
         this.getClientApprovedMeetings()
-        // this.getClientInfoApproved()
+        this.props.toggleNav()
     }
+
+    // componentDidUpdate(prevProps, prevState) {
+    //     if(this.state.meetings.length !== prevState.meetings.length) {
+    //         this.setState({activeMeeting: 0})
+    //     }
+    // }
 
     handleChange = e => {
         this.setState({ [e.target.name]: e.target.value })
@@ -39,7 +45,9 @@ export class AdminDashboard extends Component {
         axios
             .get('/api/schedules')
             .then(response => {
-                this.setState({ meetings: response.data })
+                setTimeout( () => {
+                    this.setState({ meetings: response.data })
+                },1500)
             })
             .catch(err => console.log(`admin-getClientMeeting ${err}`))
     }
@@ -56,16 +64,16 @@ export class AdminDashboard extends Component {
         let { meeting_time, meeting_date, price, pending, meetings } = this.state
         let { id } = meetings[index]
         pending = bool
+        this.setState({activeMeeting: 0})
         axios
             .put('/api/schedule', { id, meeting_date, meeting_time, price, pending })
             .then(user => {  
                 this.meetingUpdate(user.data);
                 this.getClientApprovedMeetings()
-                // this.getClientInfoApproved()
                 this.getClientMeeting()
             })
             .catch(err => {
-                alert(err.response.request.response);
+                alert(err);
             });
     }
 
@@ -126,12 +134,7 @@ export class AdminDashboard extends Component {
     render() {
         let { meetings, activeMeeting, 
             approvedMeetings, activeApprovedMeeting} = this.state
-        console.log('meetings')
-        console.log(meetings)
-        console.log('approved meetings')
-        console.log(approvedMeetings)
-        console.log(activeMeeting)
-        
+
         let displayMeetings = meetings.map((meeting, index) => {
             return (
                 <tr key={meeting.id}
@@ -390,4 +393,4 @@ function mapStateToProps(state) {
     return user
 }
 
-export default connect(mapStateToProps)(AdminDashboard)
+export default connect(mapStateToProps, { handleUpdateUser })(AdminDashboard)

@@ -64,9 +64,6 @@ export class ClientDashboard extends Component {
 
     render() {
         let { name, meetings } = this.state
-        console.log(meetings)
-        
-
         let displayMeetings = meetings.map(meeting => {   
             if(meeting.pending === null) {
                 return (
@@ -99,7 +96,7 @@ export class ClientDashboard extends Component {
         }
             )
         return (
-            <div className="App">
+            <div className="App clientDash">
 
                 <h1>Welcome {this.props.username}</h1>
   
@@ -124,6 +121,12 @@ export class ClientDashboard extends Component {
                         </thead>
                     <tbody>
                     {displayMeetings}
+                    <div class="container">
+                        <div id="box1"></div>
+                        <div id="box2"></div>
+                        <div id="box3"></div>
+                        <div id="box4"></div>
+                    </div>
                     </tbody>
                 </Table>
 

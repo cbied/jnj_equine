@@ -40,17 +40,26 @@ class StepOne extends Component {
     register = () => {
         const { firstName, lastName, address, city, state,
                 phoneNumber, email, username, password, isAdmin} = this.state
-        axios
+        if(firstName == '', lastName == '', address == '', city == '', state == '', phoneNumber == '', email == '', username == '', password == '') {
+            alert('fill in all required fields please')
+        } else {
+            axios
             .post('/auth/register', { firstName, lastName, address, city, state,
                 phoneNumber, email, username, password, isAdmin })
             .then(user => {
                 this.updateUser(user.data);
-                // this.setState({ username: '', password: '' });
+                this.props.modalRegistrationFn()
+                this.props.toggleRegistrationFn()
+                this.props.modalRegistrationFn()
+                this.props.toggleRegistrationFn()
+                alert('Your are registered! Login in and add a horse to your profile.')
             })
             .catch(err => {
                 this.setState({ username: '', password: '' });
                 alert(err.response.request.response);
             });
+        }
+        
     }
 
     toggleHorseRegistration = () => {
@@ -154,7 +163,7 @@ class StepOne extends Component {
                 </Col>
             </Row>
 
-
+            <div className="registerBtns">
             <Button
                 onClick={() => {
                     this.props.modalRegistrationFn()
@@ -167,14 +176,10 @@ class StepOne extends Component {
             <Button
                 onClick={() => {
                     this.register()
-                    this.props.modalRegistrationFn()
-                    this.props.toggleRegistrationFn()
-                    this.props.modalRegistrationFn()
-                    this.props.toggleRegistrationFn()
-                    alert('Your are registered! Login in and add a horse to your profile.')
+                    
                 }}
             >Register</Button>
-        
+            </div>
         </Form>
         )
     }

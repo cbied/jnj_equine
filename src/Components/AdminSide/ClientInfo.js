@@ -28,11 +28,12 @@ export class ClientInfo extends Component {
         console.log(clientHorseInfo)
 
         let displayClients = clientHorseInfo.map(client => {
-            return (
-                <div>
+                return (
+                    <div key={client.id}>
                     <Button color="success" id={`togglerClientInfo`} style={{ marginBottom: '1rem', marginRight:'1rem' }}>
                         {client.firstname} {client.lastname}{' - '}{client.name}
                     </Button>
+
                     <UncontrolledCollapse toggler={`#togglerClientInfo`}>
                         
                         <tr>
@@ -84,8 +85,8 @@ export class ClientInfo extends Component {
                     </tr>
                     </UncontrolledCollapse>
                 </div>
-            )
-            
+                )
+        
         })
         return (
             <Card>

@@ -3,11 +3,23 @@ $light-blue: #8CAFD5;
 $dark-blue: #1A4A84;
 $dark-beach: #635456;
 $light-beach: rgb(182, 168, 109);
-$pending: #ffe400;
-$approved: #14a76c;
-// 14a76c darker green
-// ffe400 darker yellow
+$pending: rgba(255, 229, 0, .7);
+$approved: rgba(20, 167, 108, .7);
 
+
+// mixins
+@mixin scroll-dash($overflow,$display,$width,$height) {
+  overflow: $overflow;
+  display: $display;
+  width: $width;
+  height: $height;
+}
+
+@mixin flex-btns($display, $justify, $basis) {
+  display: $display;
+  justify-content: $justify;
+  flex-basis: $basis
+}
 
 // body
 .App {
@@ -16,14 +28,23 @@ $approved: #14a76c;
 }
 
 // Header
-* {
-  margin: 0 auto;
-}
+// * {
+//   margin: 0 auto;
+// }
 
 body {
   height: 100vh;
   overflow: hidden;
   background-color: #F6F6F6;
+}
+
+// home
+.home {
+  margin: 0 auto;
+}
+
+.registerBtns {
+  @include flex-btns(flex,space-around,200px);
 }
 
 .container {
@@ -191,31 +212,45 @@ body {
 }
 
 // Dashboard body
+.clientDash {
+  @include scroll-dash(auto,block,100vw,90vh);
+  margin: 0 auto;
+  // ClientDashboard table
+  .pending {
+    background-color: $pending;
+  }
+
+  .approved {
+    background-color: $approved;
+  }
+
+  .denied {
+    display: none
+  }
+
+  .scheduler {
+    margin: 0;
+    padding: 0;   
+  }
+
+}
+
+.scheduleBtns {
+  @include flex-btns(flex,space-around,300px);
+}
+
 .center {
   margin: 0 auto !important; 
 }
 
 .clientProfileBtns {
-  display: flex;
-  flex-basis: 200px;
-  justify-content: space-around;
+  @include flex-btns(flex,space-around,200px);
   align-items: center;
   padding: 1rem;
 }
 
 
-// ClientDashboard table
-.pending {
-  background-color: $pending;
-}
 
-.approved {
-  background-color: $approved;
-}
-
-.denied {
-  display: none
-}
 
 // ListClientHorsesForUpdate Component
 .HorseProfile {
@@ -228,19 +263,15 @@ body {
   }
 
   .horseEditBtns {
-    display: flex;
-    flex-basis: 200px;
-    justify-content: space-around;
+    @include flex-btns(flex,space-around,200px);
   }
 }
 
 // AdminDashboard
 
-
 .adminDash {
-  overflow: scroll;
-  height: inherit; 
-  display: block;
+  @include scroll-dash(auto,block,100vw,90vh);
+  margin: 0 auto;
 
   .paid {
     background: $approved

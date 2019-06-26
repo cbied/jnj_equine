@@ -57,7 +57,6 @@ export class ListClientHorsesForUpdate extends Component {
     toggleNested = () => {
         this.setState({
             nestedModal: !this.state.nestedModal,
-            closeAll: false
         });
     }
 
@@ -93,8 +92,6 @@ export class ListClientHorsesForUpdate extends Component {
 
     render() {
         let { horses } = this.state
-        console.log(horses)
-        // map over values (use ClientProfile as reference)
         let displayHorses = horses.map((horse,index) => {
             return (
                     <CardBody key={horse.horse_id} >

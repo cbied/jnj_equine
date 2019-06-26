@@ -1,13 +1,18 @@
 .App {
   text-align: center; }
 
-* {
-  margin: 0 auto; }
-
 body {
   height: 100vh;
   overflow: hidden;
   background-color: #F6F6F6; }
+
+.home {
+  margin: 0 auto; }
+
+.registerBtns {
+  display: flex;
+  justify-content: space-around;
+  flex-basis: 200px; }
 
 .container {
   height: 250px;
@@ -118,24 +123,36 @@ body {
   1000% {
     transform: rotate(0deg); } }
 
+.clientDash {
+  overflow: auto;
+  display: block;
+  width: 100vw;
+  height: 90vh;
+  margin: 0 auto; }
+  .clientDash .pending {
+    background-color: rgba(255, 229, 0, 0.7); }
+  .clientDash .approved {
+    background-color: rgba(20, 167, 108, 0.7); }
+  .clientDash .denied {
+    display: none; }
+  .clientDash .scheduler {
+    margin: 0;
+    padding: 0; }
+
+.scheduleBtns {
+  display: flex;
+  justify-content: space-around;
+  flex-basis: 300px; }
+
 .center {
   margin: 0 auto !important; }
 
 .clientProfileBtns {
   display: flex;
-  flex-basis: 200px;
   justify-content: space-around;
+  flex-basis: 200px;
   align-items: center;
   padding: 1rem; }
-
-.pending {
-  background-color: #ffe400; }
-
-.approved {
-  background-color: #14a76c; }
-
-.denied {
-  display: none; }
 
 .HorseProfile {
   display: flex;
@@ -145,14 +162,16 @@ body {
     margin-bottom: 2rem; }
   .HorseProfile .horseEditBtns {
     display: flex;
-    flex-basis: 200px;
-    justify-content: space-around; }
+    justify-content: space-around;
+    flex-basis: 200px; }
 
 .adminDash {
-  overflow: scroll;
-  height: inherit;
-  display: block; }
+  overflow: auto;
+  display: block;
+  width: 100vw;
+  height: 90vh;
+  margin: 0 auto; }
   .adminDash .paid {
-    background: #14a76c; }
+    background: rgba(20, 167, 108, 0.7); }
   .adminDash .unpaid {
-    background: #ffe400; }
+    background: rgba(255, 229, 0, 0.7); }

@@ -41,9 +41,13 @@ export class ClientScheduleMeeting extends Component {
     postMeeting = () => {
         let {horse, date, time1, time2, description, payment, horses} = this.state
         console.log(horses.indexOf(horse))
-        axios
+        if(date == '' || description == '' || time1 == '' || time2 == '' || horse == null || horse == '' || payment == '' || payment == null) {
+            alert('fill in all required fields please')
+        } else {
+            axios
             .post('/api/schedule', { date, time1, time2, description, payment, horse, horses })
             .then(() => {
+                alert("Your meeting is pending, Check back soon for confirmation")
                 this.setState({
                     horse: '',
                     date: '',
@@ -52,8 +56,16 @@ export class ClientScheduleMeeting extends Component {
                     description: '',
                     payment: ''
                 })
+                this.props.modalScheduleFn()
+                this.props.toggleScheduleFn()
+                this.props.modalScheduleFn()
+                this.props.toggleScheduleFn()
             })
             .catch(() => alert('Something went wrong'));
+        }
+            
+        
+        
     }
 
  
@@ -69,8 +81,8 @@ export class ClientScheduleMeeting extends Component {
                 return <option value={horse.name} key={horse.horse_id}>{horse.name}</option>
         })
         return (
-            <div>
-                <Form>
+            <div id="scheduler">
+                <Form >
                     <FormGroup>
                         <Label for="date">Date</Label>
                         <Input type="date" name="date"
@@ -123,25 +135,22 @@ export class ClientScheduleMeeting extends Component {
                             { listHorses }
                         </Input>
                     </FormGroup>
-                    <Button
+                <div className="scheduleBtns" >
+                    <Button color="danger"
                 onClick={() => {
                     this.props.modalScheduleFn()
                     this.props.toggleScheduleFn()
                     this.props.modalScheduleFn()
                     this.props.toggleScheduleFn()}}
                     >cancel</Button>
-                    <Button
+                    <Button color="primary"
                     onClick={() => {
                         this.postMeeting()
-                        this.props.modalScheduleFn()
-                        this.props.toggleScheduleFn()
-                        this.props.modalScheduleFn()
-                        this.props.toggleScheduleFn()
-                        alert("Your meeting is pending, Check back soon for confirmation")
+                        
                     }}
                     >Request meeting
                     </Button>
-                
+                </div>
                     
                 </Form>
             </div>
