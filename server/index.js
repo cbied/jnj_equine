@@ -10,7 +10,7 @@ const express = require('express'),
     stripeController = require('./stripeController'),
     { SERVER_PORT, CONNECTION_STRING, SESSION_SECRET } = process.env;
 
-
+app.use( express.static( `${__dirname}/../build` ) );
 
 massive(CONNECTION_STRING)
     .then(db => {
@@ -30,7 +30,7 @@ app.use(session({
 
 app.use(express.json())
 app.use(cors());
-app.use( express.static( `${__dirname}/../build` ) )
+
 
 // authController 
 // registers user
