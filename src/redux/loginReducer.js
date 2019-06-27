@@ -26,7 +26,6 @@ export const handlePassword = (password) => {
 }
 
 export const handleUpdateUser = (user) => {
-    console.log(user)
     return {
         type: HANDLE_UPDATE_USER,
         payload: user

@@ -11,7 +11,6 @@ import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, Input,
 import { connect } from 'react-redux'
 import { handleUsername, handlePassword, handleUpdateUser } from '../redux/loginReducer'
 import axios from 'axios'
-import { Redirect } from 'react-router-dom'
 
 class Header extends React.Component {
 constructor(props) {
@@ -30,16 +29,13 @@ this.state = {
 }
 
     componentDidMount() {
-        
         axios
             .get('/auth/session')
             .then((user) => {
-                console.log(user.data)
                 this.setState({userData: user.data})
                 this.props.handleUpdateUser(user.data) 
         })
-       
-            }
+    }
 
 
     toggleNavbar = () => {
@@ -113,24 +109,11 @@ this.state = {
     }
 
 
-
-// login = () => {
-//     const { username, password } = this.state;
-//     axios
-//         .post('/auth/login', { username, password })
-//         .then(user => {
-//         this.updateUser(user.data)
-//         this.setState({ username: '', password: '' });
-//         })
-//         .catch(() => alert('Incorrect username or password'));
-// }
- 
 logIn = () => {
     let { username, password }= this.props
     axios
         .post('/auth/login', { username, password })
         .then(user => {
-            console.log(user)
             this.setState({userData: user.data})
             this.props.handleUpdateUser(user.data) 
         })
@@ -211,7 +194,7 @@ return (
             <Nav navbar>
             
             {/*  edit client info */}
-            <Button color='outline-secondary' className='mb-3' onClick={this.modalProfile}>Client Profile</Button>
+            <Button color='outline-primary' className='mb-3' onClick={this.modalProfile}>Client Profile</Button>
                 
                 <Modal isOpen={this.state.modalProfile} toggle={this.toggleProfile} className={this.props.className}>
                     <ModalHeader toggle={this.toggleProfile}>Update Profile</ModalHeader>
@@ -224,7 +207,7 @@ return (
                 </Modal>
 
                 {/* edit client horse */}
-                <Button color='outline-secondary' className='mb-3' onClick={this.modalHorseProfile}>Horse Profile</Button>
+                <Button color='outline-primary' className='mb-3' onClick={this.modalHorseProfile}>Horse Profile</Button>
                 
                 <Modal isOpen={this.state.modalHorseProfile} toggle={this.toggleHorseProfile} className={this.props.className}>
                     <ModalHeader>Update Horse Profile</ModalHeader>
@@ -240,7 +223,7 @@ return (
 
             
                 {/* schedule meeting */}
-                <Button color='outline-secondary' className='mb-3' onClick={this.modalSchedule}>Schedule</Button>
+                <Button color='outline-primary' className='mb-3' onClick={this.modalSchedule}>Schedule</Button>
                 
                 <Modal isOpen={this.state.modalSchedule} toggle={this.toggleSchedule} className={this.props.className}>
                     <ModalHeader toggle={this.toggle}>Schedule an Appointment</ModalHeader>

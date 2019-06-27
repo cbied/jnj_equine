@@ -56,7 +56,7 @@ async function login(req,res) {
             return res.send(req.session.user);
         }
     }
-
+   
 const logout = (req,res) => {
     req.session.destroy();
     return res.sendStatus(200);

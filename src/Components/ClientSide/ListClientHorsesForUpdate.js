@@ -31,15 +31,6 @@ export class ListClientHorsesForUpdate extends Component {
         this.deleteHorse()
     }
 
-    // componentDidUpdate(prevProps, prevState) {
-    //     console.log(prevProps)
-    //     console.log(prevState)
-    //     if(prevState.horses.length !== this.state.horses.length) {
-    //         this.deleteHorse()
-    //         this.getHorseInfo()
-    //     }
-    // }
-
     handleChange = (e,index) => {
         let tempHorses  = this.state.horses
         let tempHorse = tempHorses[index]

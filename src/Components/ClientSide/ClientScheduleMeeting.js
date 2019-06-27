@@ -30,7 +30,6 @@ export class ClientScheduleMeeting extends Component {
         axios
             .get('/api/clientHorse')
             .then(horse => {
-                console.log(horse.data)
                 this.setState({ horses: horse.data})
                 })
                 .catch(() => alert('No horses'));
@@ -39,7 +38,6 @@ export class ClientScheduleMeeting extends Component {
 
     postMeeting = () => {
         let {horse, date, time1, time2, description, payment, horses} = this.state
-        console.log(horses.indexOf(horse))
         if(date === '' || description === '' || time1 === '' || time2 === '' || horse === null || horse === '' || payment === '' || payment === null) {
             alert('fill in all required fields please')
         } else {
@@ -71,11 +69,7 @@ export class ClientScheduleMeeting extends Component {
 
 
     render() {
-        let { user } = this.props
-        console.log(user)
-        console.log(this.props)
         let { horses } = this.state
-        console.log(horses)
         let listHorses = horses.map(horse => {
                 return <option value={horse.name} key={horse.horse_id}>{horse.name}</option>
         })

@@ -132,8 +132,6 @@ export class AdminDashboard extends Component {
     render() {
         let { meetings, activeMeeting, 
             approvedMeetings, activeApprovedMeeting} = this.state
-            console.log(approvedMeetings)
-            
         let displayMeetings = meetings.map((meeting, index) => {
             return (
                 <tr key={meeting.id}
@@ -152,11 +150,10 @@ export class AdminDashboard extends Component {
             let now = new Date()
             let nowString = JSON.stringify(now)
             let currentDate = nowString.slice(1,11)
-            console.log(currentDate)
-            console.log(meeting.meeting_date)
+            
             return (
                 
-                meeting.paid && meeting.meeting_date <= currentDate  ? 
+                meeting.paid && meeting.meeting_date >= currentDate  ? 
                     (
                     <tr key={meeting.id} className="paid"
                     onClick={() => {
@@ -168,7 +165,7 @@ export class AdminDashboard extends Component {
                         <td>{meeting.select_payment}</td>
                     </tr>
                     )
-                    : !meeting.paid && meeting.meeting_date <= currentDate ?
+                    : !meeting.paid && meeting.meeting_date >= currentDate ?
                     (
                     <tr key={meeting.id} className="unpaid"
                     onClick={() => {

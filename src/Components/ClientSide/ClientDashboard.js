@@ -78,7 +78,7 @@ export class ClientDashboard extends Component {
                     <td>{meeting.select_payment}/Pending</td>
                 </tr>
                 )
-            } else if (meeting.pending === true && meeting.meeting_date <= currentDate && meeting.date <= currentDate) {
+            } else if (meeting.pending === true && meeting.meeting_date >= currentDate && meeting.date >= currentDate) {
                 return (
                 <tr key={meeting.id} className='approved'>
                     <td>{meeting.horse}</td>
@@ -124,12 +124,6 @@ export class ClientDashboard extends Component {
                         </thead>
                     <tbody>
                     {displayMeetings}
-                    <div class="container">
-                        <div id="box1"></div>
-                        <div id="box2"></div>
-                        <div id="box3"></div>
-                        <div id="box4"></div>
-                    </div>
                     </tbody>
                 </Table>
 

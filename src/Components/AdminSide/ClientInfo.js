@@ -25,8 +25,6 @@ export class ClientInfo extends Component {
 
     render() {
         let { clientHorseInfo } = this.state
-        console.log(clientHorseInfo)
-
         let displayClients = clientHorseInfo.map(client => {
                 return (
                     <div key={client.id}>

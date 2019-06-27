@@ -41,7 +41,6 @@ const updateMeetingInfo = (req,res) => {
 const updatePaid = (req,res) => {
     const db = req.app.get('db'),
     { id, paid } = req.body;
-    console.log(req.body)
 
     db.update_paid( id, paid)
         .then(response => res.status(200).json(response))
