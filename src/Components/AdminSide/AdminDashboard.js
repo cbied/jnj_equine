@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Button, Table, Modal, ModalHeader, ModalBody, ModalFooter, 
-    Input, UncontrolledCollapse, CardBody, Card, FormGroup, Label, CustomInput } from 'reactstrap'
+    Input, UncontrolledCollapse, CardBody, Card } from 'reactstrap'
 import { connect } from 'react-redux'
 import { handleUpdateUser } from '../../redux/loginReducer'
 import axios from 'axios'
@@ -45,9 +45,7 @@ export class AdminDashboard extends Component {
         axios
             .get('/api/schedules')
             .then(response => {
-                setTimeout( () => {
                     this.setState({ meetings: response.data })
-                },1500)
             })
             .catch(err => console.log(`admin-getClientMeeting ${err}`))
     }
@@ -134,7 +132,8 @@ export class AdminDashboard extends Component {
     render() {
         let { meetings, activeMeeting, 
             approvedMeetings, activeApprovedMeeting} = this.state
-
+            console.log(approvedMeetings)
+            
         let displayMeetings = meetings.map((meeting, index) => {
             return (
                 <tr key={meeting.id}
@@ -150,8 +149,14 @@ export class AdminDashboard extends Component {
         })
 
         let displayApprovedMeetings = approvedMeetings.map((meeting, index) => {
+            let now = new Date()
+            let nowString = JSON.stringify(now)
+            let currentDate = nowString.slice(1,11)
+            console.log(currentDate)
+            console.log(meeting.meeting_date)
             return (
-                meeting.paid  ? 
+                
+                meeting.paid && meeting.meeting_date <= currentDate  ? 
                     (
                     <tr key={meeting.id} className="paid"
                     onClick={() => {
@@ -163,7 +168,7 @@ export class AdminDashboard extends Component {
                         <td>{meeting.select_payment}</td>
                     </tr>
                     )
-                    : 
+                    : !meeting.paid && meeting.meeting_date <= currentDate ?
                     (
                     <tr key={meeting.id} className="unpaid"
                     onClick={() => {
@@ -175,6 +180,7 @@ export class AdminDashboard extends Component {
                         <td>{meeting.select_payment}</td>
                     </tr>
                     )
+                    : null
             )
             
                 

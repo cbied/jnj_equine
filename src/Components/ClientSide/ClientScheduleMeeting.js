@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
-import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import axios from 'axios'
 
@@ -41,7 +40,7 @@ export class ClientScheduleMeeting extends Component {
     postMeeting = () => {
         let {horse, date, time1, time2, description, payment, horses} = this.state
         console.log(horses.indexOf(horse))
-        if(date == '' || description == '' || time1 == '' || time2 == '' || horse == null || horse == '' || payment == '' || payment == null) {
+        if(date === '' || description === '' || time1 === '' || time2 === '' || horse === null || horse === '' || payment === '' || payment === null) {
             alert('fill in all required fields please')
         } else {
             axios

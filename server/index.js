@@ -36,6 +36,8 @@ app.use(cors());
 app.post('/auth/register', authController.register)
 // login user
 app.post('/auth/login', authController.login)
+// maintain session
+app.get('/auth/session', authController.session)
 // logout user
 app.post('/auth/logout', authController.logout)
 

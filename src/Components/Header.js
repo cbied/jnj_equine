@@ -6,10 +6,12 @@ import ListClientHorsesForUpdate from './ClientSide/ListClientHorsesForUpdate'
 import ClientSchedulerMeeting from './ClientSide/ClientScheduleMeeting'
 import ClientInfo from './AdminSide/ClientInfo'
 import StepOne from './ClientSide/registerWizard/StepOne'
-import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, Input, Button, Modal, ModalHeader, ModalBody, ModalFooter  } from 'reactstrap';
+import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, Input, 
+    Button, Modal, ModalHeader, ModalBody  } from 'reactstrap';
 import { connect } from 'react-redux'
 import { handleUsername, handlePassword, handleUpdateUser } from '../redux/loginReducer'
 import axios from 'axios'
+import { Redirect } from 'react-router-dom'
 
 class Header extends React.Component {
 constructor(props) {
@@ -27,28 +29,17 @@ this.state = {
     };
 }
 
-    componentWillMount() {
-        let userName = localStorage.getItem('username') && this.props.handleUsername(JSON.parse(localStorage.getItem('username'))).payload
-        let userPassword = localStorage.getItem('password') && this.props.handlePassword(JSON.parse(localStorage.getItem('password'))).payload
-        console.log(userName)
-        console.log(userPassword)
-        this.logIn = () => {
-            axios
-                .post('/auth/login', { userName, userPassword })
-                .then(user => {
-                    console.log(user)
-                    this.setState({userData: user.data})
-                    this.props.handleUpdateUser(user.data) 
-                })
-                .catch(() => alert('Incorrect username or password'));
-        }
-    }
-
-    componentDidUpdate(nextProps, nextState) {
-        localStorage.setItem('username', JSON.stringify(this.props.username))
-        localStorage.setItem('password', JSON.stringify(this.props.password))
-    }
-
+    componentDidMount() {
+        
+        axios
+            .get('/auth/session')
+            .then((user) => {
+                console.log(user.data)
+                this.setState({userData: user.data})
+                this.props.handleUpdateUser(user.data) 
+        })
+       
+            }
 
 
     toggleNavbar = () => {
@@ -201,7 +192,7 @@ return (
                 </Collapse>
                 </Navbar>
                 
-                <div class="container">
+                <div className="container">
                     <div id="box1"></div>
                     <div id="box2"></div>
                     <div id="box3"></div>

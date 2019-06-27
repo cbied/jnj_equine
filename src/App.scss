@@ -27,10 +27,6 @@ $approved: rgba(20, 167, 108, .7);
   // background: $light-blue
 }
 
-// Header
-// * {
-//   margin: 0 auto;
-// }
 
 body {
   height: 100vh;
@@ -253,9 +249,15 @@ body {
 
 
 // ListClientHorsesForUpdate Component
+div.modal-content {
+  margin: 0 auto;
+  
+}
+
 .HorseProfile {
   display: flex;
   flex-direction: column;
+  
 
   .margins {
     margin-top: 2rem;

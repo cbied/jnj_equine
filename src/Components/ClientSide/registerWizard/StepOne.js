@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-import StepTwo from './StepTwo'
-import { Col, Row, Button, Form, FormGroup, Label, Input, ModalBody, Modal, ModalHeader } from 'reactstrap';
-import { Link } from 'react-router-dom';
+import { Col, Row, Button, Form, FormGroup, Label, Input } from 'reactstrap';
 import axios from 'axios'
 
 
@@ -40,7 +38,7 @@ class StepOne extends Component {
     register = () => {
         const { firstName, lastName, address, city, state,
                 phoneNumber, email, username, password, isAdmin} = this.state
-        if(firstName == '', lastName == '', address == '', city == '', state == '', phoneNumber == '', email == '', username == '', password == '') {
+        if(firstName === '' || lastName === '' || address === '' || city === '' || state === '' || phoneNumber === '' || email === '' || username === '' || password === '') {
             alert('fill in all required fields please')
         } else {
             axios

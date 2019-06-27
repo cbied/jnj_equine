@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { Col, Row, Button, Form, FormGroup, Label, Input } from 'reactstrap';
-import { Link } from 'react-router-dom';
 import axios from 'axios'
 
 
@@ -51,7 +50,7 @@ export class AddNewHorse extends Component {
 
     render() {
         const { name, age, breed, discipline, past_injuries, behavioral_issues,
-            gender, pregnant, expected_pregnancy_date, horses } = this.state
+            gender, pregnant, expected_pregnancy_date } = this.state
             return (
         <Form className="App">
             <Row form>

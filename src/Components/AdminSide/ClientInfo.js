@@ -30,7 +30,7 @@ export class ClientInfo extends Component {
         let displayClients = clientHorseInfo.map(client => {
                 return (
                     <div key={client.id}>
-                    <Button color="success" id={`togglerClientInfo`} style={{ marginBottom: '1rem', marginRight:'1rem' }}>
+                    <Button color="success" id={`togglerClientInfo`} style={{ marginBottom: '1rem', marginRight:'1rem', marginTop:'1rem' }}>
                         {client.firstname} {client.lastname}{' - '}{client.name}
                     </Button>
 

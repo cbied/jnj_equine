@@ -44,6 +44,19 @@ async function login(req,res) {
     return res.send(req.session.user);
 }
 
+    const session = async (req,res) => {
+        const db = req.app.get('db'),
+        { username } = req.session.user;
+
+        const foundUser = await db.get_user([username]);
+        const user = foundUser[0];
+        if (req.session) {
+            req.session.user = { isAdmin: user.isadmin, id: user.id, username: user.username };
+        
+            return res.send(req.session.user);
+        }
+    }
+
 const logout = (req,res) => {
     req.session.destroy();
     return res.sendStatus(200);
@@ -53,5 +66,6 @@ const logout = (req,res) => {
 module.exports = {
     register,
     login,
+    session,
     logout
 }

@@ -154,6 +154,9 @@ body {
   align-items: center;
   padding: 1rem; }
 
+div.modal-content {
+  margin: 0 auto; }
+
 .HorseProfile {
   display: flex;
   flex-direction: column; }
