@@ -30,6 +30,7 @@ app.use(session({
 
 app.use(express.json())
 app.use(cors());
+app.use( express.static( `${__dirname}/../build` ) )
 
 // authController 
 // registers user
