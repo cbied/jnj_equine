@@ -70,21 +70,21 @@ export class ClientDashboard extends Component {
         let displayMeetings = meetings.map(meeting => {   
             if(meeting.pending === null && meeting.meeting_date >= currentDate && meeting.date >= currentDate) {
                 return (
-                <tr key={meeting.id} className='pending'>
+                <tr key={meeting.id} >
                     <td>{meeting.horse}</td>
                     <td>{meeting.date}</td>
                     <td>{meeting.time_range_one} to {meeting.time_range_two}</td>
-                    <td>Pending</td>
+                    <td className='pending' >Pending</td>
                     <td>{meeting.select_payment}/Pending</td>
                 </tr>
                 )
             } else if (meeting.pending === true && meeting.meeting_date >= currentDate && meeting.date >= currentDate) {
                 return (
-                <tr key={meeting.id} className='approved'>
+                <tr key={meeting.id} >
                     <td>{meeting.horse}</td>
                     <td>{meeting.meeting_date}</td>
                     <td>{meeting.meeting_time}</td>
-                    <td>Approved</td>
+                    <td className='approved'>Approved</td>
                     <td>{meeting.select_payment}/${meeting.price}</td>
                 </tr> 
                 ) 

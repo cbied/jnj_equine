@@ -3,8 +3,8 @@ $light-blue: #8CAFD5;
 $dark-blue: #1A4A84;
 $dark-beach: #635456;
 $light-beach: rgb(182, 168, 109);
-$pending: rgba(255, 229, 0, .7);
-$approved: rgba(20, 167, 108, .7);
+$pending: rgba(255, 229, 0, .8);
+$approved: rgba(20, 167, 108, .8);
 
 
 // mixins
@@ -24,7 +24,7 @@ $approved: rgba(20, 167, 108, .7);
 // body
 .App {
   text-align: center;
-  // background: $light-blue
+ 
 }
 
 
@@ -55,6 +55,7 @@ body {
   right: 0;
   background-color: #F6F6F6;
   animation: fullspin 10s infinite alternate;
+  background: rgba(255,176,43,0);
 }
 
 #box1 {
