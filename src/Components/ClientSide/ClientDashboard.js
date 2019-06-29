@@ -68,7 +68,7 @@ export class ClientDashboard extends Component {
         let nowString = JSON.stringify(now)
         let currentDate = nowString.slice(1,11)
         let displayMeetings = meetings.map(meeting => {   
-            if(meeting.pending === null && meeting.meeting_date <= currentDate && meeting.date <= currentDate) {
+            if(meeting.pending === null && meeting.meeting_date >= currentDate && meeting.date >= currentDate) {
                 return (
                 <tr key={meeting.id} className='pending'>
                     <td>{meeting.horse}</td>
