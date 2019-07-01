@@ -10,7 +10,7 @@ const express = require('express'),
     stripeController = require('./stripeController'),
     { SERVER_PORT, CONNECTION_STRING, SESSION_SECRET } = process.env;
 
-// app.use( express.static( `${__dirname}/../build` ) );
+app.use( express.static( `${__dirname}/../build` ) );
 
 massive(CONNECTION_STRING)
     .then(db => {
