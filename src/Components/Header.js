@@ -17,14 +17,13 @@ constructor(props) {
 super(props);
 
 this.state = {
-    collapsed: true,
+    collapsed: false,
     modalProfile: false,
     modalHorseProfile: false,
     modal: false,
     modalClients: false,
     modalRegistration: false,
-    userData: null,
-
+    userData: null
     };
 }
 
@@ -132,6 +131,7 @@ logout = () => {
 
 render() {
     const { username, password, user } = this.props
+    console.log(this.state.modal)
 return (
                 !user.id ? 
                 (
@@ -153,8 +153,11 @@ return (
 
                 <Button color='outline-secondary' className='mb-3 mt-3' onClick={this.modalRegistration}>Register</Button>
                 
-                <Modal isOpen={this.state.modalRegistration} toggle={this.toggleRegistration} className={this.props.className}>
-                    <ModalHeader toggle={this.toggleRegistration}>Register</ModalHeader>
+                <Modal isOpen={this.state.modalRegistration} toggle={() => {
+                    this.toggleRegistration()
+                    this.toggleRegistration()
+                }} className={this.props.className}>
+                    <ModalHeader>Register</ModalHeader>
                     <ModalBody>
                         <StepOne 
                         modalRegistrationFn={this.modalRegistration}
@@ -196,8 +199,11 @@ return (
             {/*  edit client info */}
             <Button color='outline-primary' className='mb-3' onClick={this.modalProfile}>Client Profile</Button>
                 
-                <Modal isOpen={this.state.modalProfile} toggle={this.toggleProfile} className={this.props.className}>
-                    <ModalHeader toggle={this.toggleProfile}>Update Profile</ModalHeader>
+                <Modal isOpen={this.state.modalProfile} toggle={() => {
+                    this.toggleProfile()
+                    this.toggleProfile()
+                }} className={this.props.className}>
+                    <ModalHeader>Update Profile</ModalHeader>
                     <ModalBody>
                         <ClientProfile 
                         modalProfileFn={this.modalProfile}
@@ -209,7 +215,10 @@ return (
                 {/* edit client horse */}
                 <Button color='outline-primary' className='mb-3' onClick={this.modalHorseProfile}>Horse Profile</Button>
                 
-                <Modal isOpen={this.state.modalHorseProfile} toggle={this.toggleHorseProfile} className={this.props.className}>
+                <Modal isOpen={this.state.modalHorseProfile} toggle={() => {
+                    this.toggleHorseProfile()
+                    this.toggleHorseProfile()
+                }} className={this.props.className}>
                     <ModalHeader>Update Horse Profile</ModalHeader>
                         
                     <ModalBody>
@@ -225,8 +234,11 @@ return (
                 {/* schedule meeting */}
                 <Button color='outline-primary' className='mb-3' onClick={this.modalSchedule}>Schedule</Button>
                 
-                <Modal isOpen={this.state.modalSchedule} toggle={this.toggleSchedule} className={this.props.className}>
-                    <ModalHeader toggle={this.toggle}>Schedule an Appointment</ModalHeader>
+                <Modal isOpen={this.state.modalSchedule} toggle={() => {
+                    this.toggleSchedule()
+                    this.toggleSchedule()
+                }} className={this.props.className}>
+                    <ModalHeader>Schedule an Appointment</ModalHeader>
                     <ModalBody>
                         <ClientSchedulerMeeting 
                         modalScheduleFn={this.modalSchedule}
@@ -267,8 +279,10 @@ return (
             </Button>
 
             <Button color='outline-primary' className='mb-3' onClick={this.modalClientInfo}>Client Info</Button>
-            <Modal isOpen={this.state.modalClients} toggle={this.toggleClientInfo}>
-                <ModalHeader toggle={this.toggleClientInfo}>Client Info</ModalHeader>
+            <Modal isOpen={this.state.modalClients} toggle={() => {
+                    this.toggleClientInfo()
+                    this.toggleClientInfo()}}>
+                <ModalHeader>Client Info</ModalHeader>
                 <ModalBody>
                     <ClientInfo 
                     modalClientsFn={this.modalClientInfo}
