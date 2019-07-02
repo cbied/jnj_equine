@@ -131,7 +131,6 @@ logout = () => {
 
 render() {
     const { username, password, user } = this.props
-    console.log(this.state.modal)
 return (
                 !user.id ? 
                 (
@@ -165,7 +164,7 @@ return (
                         />
                     </ModalBody>
                 </Modal>
-
+                
                 
                 <Button color="primary"
                 onClick={() => {

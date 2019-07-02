@@ -13,7 +13,7 @@ export class ClientDashboard extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            collapsed: true,
+            collapsed: true, 
             name: "",
             meetings: [],
             modalSchedule: false,
@@ -67,8 +67,10 @@ export class ClientDashboard extends Component {
         let now = new Date()
         let nowString = JSON.stringify(now)
         let currentDate = nowString.slice(1,11)
+        console.log(meetings)
+        console.log(currentDate)
         let displayMeetings = meetings.map(meeting => {   
-            if(meeting.pending === null && meeting.meeting_date >= currentDate && meeting.date >= currentDate) {
+            if(meeting.pending == null && meeting.date >= currentDate) {
                 return (
                 <tr key={meeting.id} >
                     <td>{meeting.horse}</td>
@@ -78,7 +80,7 @@ export class ClientDashboard extends Component {
                     <td>{meeting.select_payment}/Pending</td>
                 </tr>
                 )
-            } else if (meeting.pending === true && meeting.meeting_date >= currentDate && meeting.date >= currentDate) {
+            } else if (meeting.pending === true && meeting.meeting_date >= currentDate) {
                 return (
                 <tr key={meeting.id} >
                     <td>{meeting.horse}</td>
