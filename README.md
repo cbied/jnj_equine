@@ -5,13 +5,12 @@
 
 Technologies Used: React | Axios | HTML | CSS | SASS/SCSS | ReactStrap/Bootstrap | Redux| Node | Express | Bcrypt | PostgreSQL
 
-![Image of login](https://github.com/cbied/jnj_equine/src/assets/jnjLogin.PNG)
 ![Image of login](https://github.com/cbied/jnj_equine/blob/master/assets/jnjLogin.PNG)
-<!-- ![Image of Yaktocat](https://octodex.github.com/images/yaktocat.png)
-![Image of Yaktocat](https://octodex.github.com/images/yaktocat.png)
-![Image of Yaktocat](https://octodex.github.com/images/yaktocat.png)
-![Image of Yaktocat](https://octodex.github.com/images/yaktocat.png)
-![Image of Yaktocat](https://octodex.github.com/images/yaktocat.png) -->
+![ClientSide One](https://github.com/cbied/jnj_equine/blob/master/assets/jnjClientSide.PNG)
+![ClientSide Two](https://github.com/cbied/jnj_equine/blob/master/assets/jnjClientSide2.PNG)
+![ClientSide Three](https://github.com/cbied/jnj_equine/blob/master/assets/jnjClientSide3.PNG)
+![Payment](https://github.com/cbied/jnj_equine/blob/master/assets/jnjPayment.PNG)
+![AdminLogin](https://github.com/cbied/jnj_equine/blob/master/assets/jnjAdminSide.PNG)
 
 
 
