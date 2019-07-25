@@ -6,12 +6,13 @@
 Technologies Used: React | Axios | HTML | CSS | SASS/SCSS | ReactStrap/Bootstrap | Redux| Node | Express | Bcrypt | PostgreSQL
 
 ![Image of login](https://github.com/cbied/jnj_equine/src/assets/jnjLogin.PNG)
-![Image of login](https://github.com/cbied/jnj_equine/tree/master/assets/jnjLogin.PNG)
+![Image of login](https://github.com/cbied/jnj_equine/blob/master/assets/jnjLogin.PNG)
 <!-- ![Image of Yaktocat](https://octodex.github.com/images/yaktocat.png)
 ![Image of Yaktocat](https://octodex.github.com/images/yaktocat.png)
 ![Image of Yaktocat](https://octodex.github.com/images/yaktocat.png)
 ![Image of Yaktocat](https://octodex.github.com/images/yaktocat.png)
 ![Image of Yaktocat](https://octodex.github.com/images/yaktocat.png) -->
+
 
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
