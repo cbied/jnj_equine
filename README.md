@@ -5,7 +5,7 @@
 
 Technologies Used: React | Axios | HTML | CSS | SASS/SCSS | ReactStrap/Bootstrap | Redux| Node | Express | Bcrypt | PostgreSQL
 
-##Features:##
+## Features: <h2>
 *Created RESTful protocol for update, get, put, and delete endpoints 
 *Used Node.js and Bcrypt/Salt for authentication for register and login
 *Self taught and implemented Stripe so customers could pay for meetings
