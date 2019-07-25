@@ -7,8 +7,12 @@ Technologies Used: React | Axios | HTML | CSS | SASS/SCSS | ReactStrap/Bootstrap
 
 ## Features: ## 
 * Created RESTful protocol for update, get, put, and delete endpoints 
+* Client can schedule appointments 
+* Client can update their and their horse information
+* Admin can approve/deny appointments 
+* Admin can update if the client paid (if they were to pay in cash)
 * Used Node.js and Bcrypt/Salt for authentication for register and login
-* Self taught and implemented Stripe so customers could pay for meetings
+* Self taught and implemented Stripe so client can pay for meetings
 * Wrote SASS and animations along with ReactStrap for UI/UX design
 * Won best UI/UX award 
 
