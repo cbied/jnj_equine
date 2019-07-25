@@ -5,7 +5,7 @@
 
 Technologies Used: React | Axios | HTML | CSS | SASS/SCSS | ReactStrap/Bootstrap | Redux| Node | Express | Bcrypt | PostgreSQL
 
-![Image of login](./src/assets/jnjLogin)
+![Image of login](./src/assets/jnjLogin.png)
 ![Image of Yaktocat](https://octodex.github.com/images/yaktocat.png)
 <!-- ![Image of Yaktocat](https://octodex.github.com/images/yaktocat.png)
 ![Image of Yaktocat](https://octodex.github.com/images/yaktocat.png)
