@@ -5,12 +5,12 @@
 
 Technologies Used: React | Axios | HTML | CSS | SASS/SCSS | ReactStrap/Bootstrap | Redux| Node | Express | Bcrypt | PostgreSQL
 
-## Features: <h2>
-*Created RESTful protocol for update, get, put, and delete endpoints 
-*Used Node.js and Bcrypt/Salt for authentication for register and login
-*Self taught and implemented Stripe so customers could pay for meetings
-*Wrote SASS and animations along with ReactStrap for UI/UX design
-*Won best UI/UX award 
+## Features: ## 
+* Created RESTful protocol for update, get, put, and delete endpoints 
+* Used Node.js and Bcrypt/Salt for authentication for register and login
+* Self taught and implemented Stripe so customers could pay for meetings
+* Wrote SASS and animations along with ReactStrap for UI/UX design
+* Won best UI/UX award 
 
 ![Image of login](https://github.com/cbied/jnj_equine/blob/master/assets/jnjLogin.PNG | width=250)
 ![ClientSide One](https://github.com/cbied/jnj_equine/blob/master/assets/jnjClientSide.PNG)
