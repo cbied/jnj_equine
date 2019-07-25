@@ -12,12 +12,12 @@ Technologies Used: React | Axios | HTML | CSS | SASS/SCSS | ReactStrap/Bootstrap
 *Wrote SASS and animations along with ReactStrap for UI/UX design
 *Won best UI/UX award 
 
-![Image of login](https://github.com/cbied/jnj_equine/blob/master/assets/jnjLogin.PNG =250x)
-![ClientSide One](https://github.com/cbied/jnj_equine/blob/master/assets/jnjClientSide.PNG =250x)
-![ClientSide Two](https://github.com/cbied/jnj_equine/blob/master/assets/jnjClientSide2.PNG =250x)
-![ClientSide Three](https://github.com/cbied/jnj_equine/blob/master/assets/jnjClientSide3.PNG =250x)
-![Payment](https://github.com/cbied/jnj_equine/blob/master/assets/jnjPayment.PNG =250x)
-![AdminLogin](https://github.com/cbied/jnj_equine/blob/master/assets/jnjAdminSide.PNG =250x)
+![Image of login](https://github.com/cbied/jnj_equine/blob/master/assets/jnjLogin.PNG | width=250)
+![ClientSide One](https://github.com/cbied/jnj_equine/blob/master/assets/jnjClientSide.PNG)
+![ClientSide Two](https://github.com/cbied/jnj_equine/blob/master/assets/jnjClientSide2.PNG)
+![ClientSide Three](https://github.com/cbied/jnj_equine/blob/master/assets/jnjClientSide3.PNG)
+![Payment](https://github.com/cbied/jnj_equine/blob/master/assets/jnjPayment.PNG)
+![AdminLogin](https://github.com/cbied/jnj_equine/blob/master/assets/jnjAdminSide.PNG)
 
 
 
