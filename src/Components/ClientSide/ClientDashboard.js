@@ -64,11 +64,9 @@ export class ClientDashboard extends Component {
 
     render() {
         let { name, meetings } = this.state
-        let now = new Date()
+        let now = new Date()  
         let nowString = JSON.stringify(now)
         let currentDate = nowString.slice(1,11)
-        console.log(meetings)
-        console.log(currentDate)
         let displayMeetings = meetings.map(meeting => {   
             if(meeting.pending == null && meeting.date >= currentDate) {
                 return (
